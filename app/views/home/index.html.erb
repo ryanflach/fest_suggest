@@ -1,0 +1,11 @@
+<center>
+  <h1>FestSuggest</h1>
+  <h3>Coming Soon.</h3>
+</center>
+
+<% if current_user %>
+  Welcome, <%= current_user.username %>!
+  <%= link_to "Logout", logout_path, method: :delete %>
+<% else %>
+  <%= link_to "Login with Spotify", spotify_login_path %>
+<% end %>
