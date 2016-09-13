@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
 
   def process_user_login
     tokens     = Spotify::AuthService.new(params[:code]).process_auth
-    username   = Spotify::UserService.new(tokens[:access_token])
+    username   = Spotify::Service.new(tokens[:access_token])
                                      .get_username
     @user_data = format_user_data(tokens, username)
     create

@@ -38,7 +38,7 @@ RSpec.feature 'User logs in with Spotify' do
         .to receive(:retrieve_user_tokens)
         .and_return(parsed_token_data)
 
-      allow_any_instance_of(Spotify::UserService)
+      allow_any_instance_of(Spotify::Service)
         .to receive(:request_user_data)
         .and_return(parsed_user_data)
 
@@ -102,7 +102,7 @@ RSpec.feature 'User logs in with Spotify' do
         .to receive(:retrieve_user_tokens)
         .and_return(parsed_token_data)
 
-      allow_any_instance_of(Spotify::UserService)
+      allow_any_instance_of(Spotify::Service)
         .to receive(:request_user_data)
         .and_return(parsed_user_data)
 
