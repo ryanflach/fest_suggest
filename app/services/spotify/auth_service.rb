@@ -20,7 +20,7 @@ class Spotify::AuthService < Spotify::Base
         'refresh_token' => refresh_token
       }
     end
-    format_token_response(parse(response))
+    format_token_response(parse(response.body))
   end
 
   private
@@ -44,7 +44,7 @@ class Spotify::AuthService < Spotify::Base
         'redirect_uri' => ENV['SPOTIFY_REDIRECT']
       }
     end
-    parse(response)
+    parse(response.body)
   end
 
   def format_token_response(tokens)
