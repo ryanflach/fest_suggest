@@ -54,6 +54,23 @@ RSpec.describe 'Spotify service' do
       end
     end
   end
+
+  context '#recommended_artists' do
+    it "gets a user's recommended artists" do
+      VCR.use_cassette('spotify_service_recommended_artists') do
+        artist_ids = "4MXUO7sVCaFgFjoTI5ox5c," \
+                     "39vm4qt0PqnZrJOoA9FXTD," \
+                     "5SjNVG3L9mgWQPsfp1sFDB," \
+                     "0IlQRCafsMrd0QkTRBU6n0," \
+                     "7z1QgLoFoyVn2Ra22w8Wzo"
+        recommended = Spotify::Service.new(ENV['ACCESS_TOKEN'])
+                                      .recommended_artists(artist_ids)
+
+        expect(recommended.length).to eq(50)
+        expect(recommended.first[:artists].first[:name]).to eq('Warpaint')
+      end
+    end
+  end
 end
 
 def token_expired?

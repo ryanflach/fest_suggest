@@ -4,6 +4,14 @@ class Spotify::Service < Spotify::Base
     @connection = initialize_connection
   end
 
+  def recommended_artists(top_5_artist_ids)
+    response = connection.get('/v1/recommendations') do |request|
+      request.params[:seed_artists] = top_5_artist_ids
+      request.params[:limit] = 50
+    end
+    parse(response.body)[:tracks]
+  end
+
   def top_25_artists(time_range)
     response = connection.get('/v1/me/top/artists') do |request|
       request.params[:limit] = 25
