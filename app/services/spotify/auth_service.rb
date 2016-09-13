@@ -1,4 +1,4 @@
-class Spotify::AuthService < Spotify::Base
+class Spotify::AuthService < Base
   attr_reader :code,
               :connection
 

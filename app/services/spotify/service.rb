@@ -1,4 +1,4 @@
-class Spotify::Service < Spotify::Base
+class Spotify::Service < Base
   def initialize(token)
     @token = token
     @connection = initialize_connection

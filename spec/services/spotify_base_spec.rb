@@ -15,7 +15,7 @@ RSpec.describe 'Spotify Base' do
       \"type\" : \"user\",\n
       \"uri\" : \"spotify:user:test\"\n}"
 
-    parsed = Spotify::Base.new.parse(sample_response)
+    parsed = Base.new.parse(sample_response)
 
     expect(parsed[:id]).to eq('test')
   end
