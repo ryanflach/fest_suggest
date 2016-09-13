@@ -67,7 +67,8 @@ RSpec.describe 'Spotify service' do
                                       .recommended_artists(artist_ids)
 
         expect(recommended.length).to eq(50)
-        expect(recommended.first[:artists].first[:name]).to eq('Warpaint')
+        expect(recommended.first[:artists].first[:name])
+          .to eq('Natural Child')
       end
     end
   end
