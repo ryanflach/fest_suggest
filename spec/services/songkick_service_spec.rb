@@ -28,4 +28,17 @@ RSpec.describe 'Songkick service' do
       end
     end
   end
+
+  context '#past_events' do
+    it "returns an artist's past events from start of year by id" do
+      VCR.use_cassette('songkick_service_past_events') do
+        artist_id = 118_509
+        past_events = Songkick::Service.new.past_events(artist_id)
+
+        expect(past_events.first[:type]).to eq('Concert')
+        expect(past_events.first[:displayName])
+          .to eq('Sufjan Stevens at State Theatre (February 23, 2016)')
+      end
+    end
+  end
 end

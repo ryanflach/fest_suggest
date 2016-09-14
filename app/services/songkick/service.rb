@@ -17,6 +17,15 @@ class Songkick::Service < Base
     parse(response.body)[:resultsPage][:results][:event]
   end
 
+  def past_events(artist_id)
+    response = connection.get(
+      "/api/3.0/artists/#{artist_id}/gigography.json"
+    ) do |req|
+      req.params[:min_date] = "#{Date.today.year}-01-01"
+    end
+    parse(response.body)[:resultsPage][:results][:event]
+  end
+
   private
 
   attr_reader :connection
