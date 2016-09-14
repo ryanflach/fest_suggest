@@ -10,6 +10,13 @@ class Songkick::Service < Base
     parse(response.body)[:resultsPage][:results][:artist].first
   end
 
+  def upcoming_events(artist_id)
+    response = connection.get(
+      "/api/3.0/artists/#{artist_id}/calendar.json"
+    )
+    parse(response.body)[:resultsPage][:results][:event]
+  end
+
   private
 
   attr_reader :connection
