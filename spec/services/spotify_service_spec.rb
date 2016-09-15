@@ -67,7 +67,7 @@ RSpec.describe 'Spotify service' do
         recommended = Spotify::Service.new(ENV['ACCESS_TOKEN'])
                                       .recommended_artists(artist_ids)
 
-        expect(recommended.length).to eq(50)
+        expect(recommended.length).to eq(100)
         expect(recommended.first[:artists].first[:name])
           .to eq('Sufjan Stevens')
       end

@@ -29,6 +29,15 @@ class Artist
     compose_complete_artists_in_parallel(artists)
   end
 
+  def self.recommended(current_user, top_artists)
+    artists = RecommendationEngine.new(current_user, top_artists)
+                                  .unique_recommended
+    artists.map do |artist|
+      artist[:weight] = 26
+      Artist.new(artist: artist, songkick: {})
+    end
+  end
+
   def name
     artist[:name]
   end
@@ -83,6 +92,10 @@ class Artist
     end
     threads.each(&:join)
     complete_artists.sort_by!(&:weight)
+  end
+
+  def id
+    artist[:id]
   end
 
   private

@@ -44,4 +44,26 @@ describe Artist do
       expect(top_artists.first.on_tour?).to be_falsy
     end
   end
+
+  it "gets a user's unique recommended, weighted artists" do
+    VCR.use_cassette('artist_recommended_artists') do
+      user = create(
+        :user,
+        access_token: ENV['ACCESS_TOKEN'],
+        refresh_token: ENV['REFRESH_TOKEN'],
+        token_expiry: ENV['TOKEN_EXPIRY']
+      )
+
+      top_artists = Artist.top_spotify_artists(user, 'long_term')
+      recommended = Artist.recommended(user, top_artists)
+
+      expect(recommended.length).to be > 24
+      expect(recommended.first).to be_a(Artist)
+      expect(recommended.first.name).to be_a(String)
+      expect(recommended.first.weight).to eq(26)
+      expect(recommended.last.weight).to eq(26)
+      expect(recommended.uniq(&:name).length)
+        .to eq(recommended.length)
+    end
+  end
 end
