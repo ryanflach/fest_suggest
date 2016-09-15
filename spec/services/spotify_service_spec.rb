@@ -1,4 +1,5 @@
 require 'rails_helper'
+include SpotifyHelper
 
 RSpec.describe 'Spotify service' do
   before(:all) { refresh_access_token if token_expired? }
@@ -37,7 +38,7 @@ RSpec.describe 'Spotify service' do
 
         expect(top_25.length).to eq(25)
         expect(top_artist[:name]).to eq('Sufjan Stevens')
-        expect(second_artist[:name]).to eq('Everything Everything')
+        expect(second_artist[:name]).to eq('Local Natives')
       end
     end
 
@@ -48,9 +49,9 @@ RSpec.describe 'Spotify service' do
         top_artist = top_25.first
         second_artist = top_25.second
 
-        expect(top_25.length).to eq(9)
-        expect(top_artist[:name]).to eq('Wye Oak')
-        expect(second_artist[:name]).to eq('DJ Shadow')
+        expect(top_25.length).to eq(17)
+        expect(top_artist[:name]).to eq('Local Natives')
+        expect(second_artist[:name]).to eq('Sufjan Stevens')
       end
     end
   end
@@ -68,31 +69,8 @@ RSpec.describe 'Spotify service' do
 
         expect(recommended.length).to eq(50)
         expect(recommended.first[:artists].first[:name])
-          .to eq('Natural Child')
+          .to eq('Sufjan Stevens')
       end
     end
-  end
-end
-
-def token_expired?
-  ENV['TOKEN_EXPIRY'] < Time.now
-end
-
-def refresh_access_token
-  new_tokens = Spotify::AuthService.new
-                                   .refresh_user_tokens(
-                                     ENV['REFRESH_TOKEN']
-                                   )
-  update_yml_file(new_tokens)
-end
-
-def update_yml_file(tokens)
-  data = YAML.load_file('config/application.yml')
-  data['test']['ACCESS_TOKEN'] = tokens[:access_token]
-  data['test']['TOKEN_EXPIRY'] = tokens[:token_expiry]
-  data['test']['REFRESH_TOKEN'] =
-    tokens[:refresh_token] if tokens[:refresh_token]
-  File.open('config/application.yml', 'w') do |file|
-    YAML.dump(data, file)
   end
 end
