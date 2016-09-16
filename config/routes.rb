@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/auth/spotify/callback',
       to: 'sessions#process_spotify_auth_response'
   delete '/logout', to: 'sessions#destroy', as: :logout
+  resources :festivals, only: [:index]
 end
