@@ -56,14 +56,36 @@ describe Artist do
 
       top_artists = Artist.top_spotify_artists(user, 'long_term')
       recommended = Artist.recommended(user, top_artists)
+      top_artists_names = top_artists.map(&:name)
+      duplicates = recommended.map do |artist|
+        artist.name if top_artists_names.include?(artist.name)
+      end.compact
 
       expect(recommended.length).to be > 24
+      expect(duplicates.length).to eq(0)
       expect(recommended.first).to be_a(Artist)
       expect(recommended.first.name).to be_a(String)
       expect(recommended.first.weight).to eq(26)
       expect(recommended.last.weight).to eq(26)
       expect(recommended.uniq(&:name).length)
         .to eq(recommended.length)
+    end
+  end
+
+  it "gets a user's top and recommended artists" do
+    VCR.use_cassette('artist_all_top_and_recommended') do
+      user = create(
+        :user,
+        access_token: ENV['ACCESS_TOKEN'],
+        refresh_token: ENV['REFRESH_TOKEN'],
+        token_expiry: ENV['TOKEN_EXPIRY']
+      )
+
+      all_artists = Artist.all(user, 'long_term')
+
+      expect(all_artists.length).to be > 25
+      expect(all_artists.first.weight).to eq(1)
+      expect(all_artists.last.weight).to eq(26)
     end
   end
 end
