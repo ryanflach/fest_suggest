@@ -64,7 +64,7 @@ RSpec.feature 'User logs in with Spotify' do
     end
 
     scenario 'existing user grants permissions' do
-      create(:user)
+      create(:user, access_token: 1234, refresh_token: 5678)
       original_expiry = User.first.token_expiry
 
       params = {

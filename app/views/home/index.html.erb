@@ -1,11 +1,11 @@
 <center>
   <h1>FestSuggest</h1>
-  <h3>Coming Soon.</h3>
 </center>
 
-<% if current_user %>
-  Welcome, <%= current_user.username %>!
-  <%= link_to "Logout", logout_path, method: :delete %>
-<% else %>
-  <%= link_to "Login with Spotify", spotify_login_path %>
-<% end %>
+<center>
+  <% if current_user %>
+    <%= link_to "top 5 by all time top artists", festivals_path(range: 'long_term'), class: 'btn btn-default' %>
+    <%= link_to "top 5 by artists last 6 months", festivals_path(range: 'medium_term'), class: 'btn btn-default' %>
+    <%= link_to "top 5 by artists last 4 weeks", festivals_path(range: 'short_term'), class: 'btn btn-default' %>
+  <% end %>
+</center>

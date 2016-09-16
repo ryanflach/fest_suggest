@@ -9,6 +9,12 @@ class Artist
     @songkick_id = params[:songkick][:id]
   end
 
+  def self.all(current_user, range)
+    top_artists = top_artists_complete(current_user, range)
+    recommended_artists = recommended(current_user, top_artists)
+    top_artists + recommended_artists
+  end
+
   def self.spotify_service(current_user)
     Spotify::Service.new(current_user.access_token)
   end
