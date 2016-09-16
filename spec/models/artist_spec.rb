@@ -6,13 +6,7 @@ describe Artist do
 
   it "gets a user's top artists with complete profiles" do
     VCR.use_cassette('artist_top_artists_complete') do
-      user = create(
-        :user,
-        access_token: ENV['ACCESS_TOKEN'],
-        refresh_token: ENV['REFRESH_TOKEN'],
-        token_expiry: ENV['TOKEN_EXPIRY']
-      )
-
+      user = create(:user)
       top_artists = Artist.top_artists_complete(user, 'long_term')
       top_artist = top_artists.first
 
@@ -27,13 +21,7 @@ describe Artist do
 
   it "gets a user's top spotify artists" do
     VCR.use_cassette('artist_top_spotify_artists') do
-      user = create(
-        :user,
-        access_token: ENV['ACCESS_TOKEN'],
-        refresh_token: ENV['REFRESH_TOKEN'],
-        token_expiry: ENV['TOKEN_EXPIRY']
-      )
-
+      user = create(:user)
       top_artists = Artist.top_spotify_artists(user, 'long_term')
 
       expect(top_artists.length).to eq(25)
@@ -47,13 +35,7 @@ describe Artist do
 
   it "gets a user's unique recommended, weighted artists" do
     VCR.use_cassette('artist_recommended_artists') do
-      user = create(
-        :user,
-        access_token: ENV['ACCESS_TOKEN'],
-        refresh_token: ENV['REFRESH_TOKEN'],
-        token_expiry: ENV['TOKEN_EXPIRY']
-      )
-
+      user = create(:user)
       top_artists = Artist.top_spotify_artists(user, 'long_term')
       recommended = Artist.recommended(user, top_artists)
       top_artists_names = top_artists.map(&:name)
@@ -74,13 +56,7 @@ describe Artist do
 
   it "gets a user's top and recommended artists" do
     VCR.use_cassette('artist_all_top_and_recommended') do
-      user = create(
-        :user,
-        access_token: ENV['ACCESS_TOKEN'],
-        refresh_token: ENV['REFRESH_TOKEN'],
-        token_expiry: ENV['TOKEN_EXPIRY']
-      )
-
+      user = create(:user)
       all_artists = Artist.all(user, 'long_term')
 
       expect(all_artists.length).to be > 25
