@@ -12,8 +12,7 @@ describe Festival do
 
       expect(festivals.first).to be_a(Festival)
       expect(festivals.length).to eq(19)
-      expect(festivals.first.name)
-        .to eq('Dayton Music, Art & Film Festival 2016')
+      expect(festivals.first.name).to eq('Riot Fest Chicago 2016')
       expect(festivals.first.start_date)
         .to be <= festivals.second.start_date
     end
