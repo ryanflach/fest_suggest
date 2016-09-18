@@ -9,10 +9,11 @@
       <th>Location</th>
       <th>Top Artists</th>
       <th>Recommended Artists</th>
+      <th>Other Artists</th>
     </thead>
     <tbody>
       <% @festivals.each_with_index do |festival, index| %>
-        <tr>
+        <tr id="fest-<%= index + 1 %>">
           <td class='text-center'><%= index + 1 %></td>
           <td><%= link_to festival.name, festival.url, target: '_blank' %></td>
           <td><%= festival.location %></td>
@@ -29,6 +30,9 @@
                 <%= artist.name %><br />
               <% end %>
             <% end %>
+          </td>
+          <td>
+            <%= festival.other_artists_count %>+
           </td>
         </tr>
       <% end %>

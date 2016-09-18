@@ -82,7 +82,8 @@ class FestivalEngine
     else
       score_artists(top_artists_at_fest) /
         top_artists_at_fest.length -
-        rec_artists_at_fest.length
+        rec_artists_at_fest.length -
+        (top_artists_at_fest.length * 2)
     end
   end
 
