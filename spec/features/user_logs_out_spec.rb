@@ -6,13 +6,12 @@ RSpec.feature 'User logs out' do
 
     visit '/'
 
-    expect(page).to have_content('Welcome, test!')
+    expect(page).to have_link('X')
 
-    click_on 'Logout'
+    click_on 'X'
 
-    expect(page).to have_content('Logged out. Thanks for visiting!')
     expect(page).to have_link('Login with Spotify')
-    expect(page).to_not have_link('Logout')
+    expect(page).to_not have_link('X')
   end
 end
 

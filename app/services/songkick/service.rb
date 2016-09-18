@@ -8,7 +8,8 @@ module Songkick
       response = connection.get('/api/3.0/search/artists.json') do |req|
         req.params[:query] = artist_name
       end
-      parse(response.body)[:resultsPage][:results][:artist].first
+      results = parse(response.body)[:resultsPage][:results]
+      results[:artist] ? results[:artist].first : {}
     end
 
     def upcoming_events(artist_id)

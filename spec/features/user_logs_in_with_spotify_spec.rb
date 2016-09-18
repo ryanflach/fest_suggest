@@ -57,9 +57,7 @@ RSpec.feature 'User logs in with Spotify' do
         .to be_kind_of(ActiveSupport::TimeWithZone)
       expect(user.token_expiry > Time.now).to eq(true)
       expect(current_path).to eq(root_path)
-      expect(page).to have_content('Successfully logged in.')
-      expect(page).to have_content('Welcome, test!')
-      expect(page).to have_link('Logout')
+      expect(page).to have_link('X')
       expect(page).to_not have_link('Login with Spotify')
     end
 
@@ -123,9 +121,7 @@ RSpec.feature 'User logs in with Spotify' do
       expect(user.refresh_token).to eq('sample_refresh_token')
       expect(original_expiry < user.token_expiry).to eq(true)
       expect(current_path).to eq(root_path)
-      expect(page).to have_content('Successfully logged in.')
-      expect(page).to have_content('Welcome, test!')
-      expect(page).to have_link('Logout')
+      expect(page).to have_link('X')
       expect(page).to_not have_link('Login with Spotify')
     end
   end

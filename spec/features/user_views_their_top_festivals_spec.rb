@@ -14,7 +14,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return(user)
 
         visit '/'
-        click_on 'top 5 by all time top artists'
+        click_on 'Top 5 Fests by All Time Top Artists'
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -48,7 +48,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return(user)
 
         visit '/'
-        click_on 'top 5 by artists last 6 months'
+        click_on "Top 5 Fests by Last 6 Month's Top Artists"
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -82,7 +82,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return(user)
 
         visit '/'
-        click_on 'top 5 by artists last 4 weeks'
+        click_on "Top 5 Fests by Last 4 Week's Top Artists"
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -102,6 +102,32 @@ RSpec.describe 'User views their top festivals' do
         end
 
         expect(page).to_not have_css("#fest-6")
+      end
+    end
+  end
+
+  context 'logged-in user no top artists with festivals' do
+    scenario 'they visit the root path' do
+      VCR.use_cassette('festival_top_5_none') do
+        user = create(:user)
+
+        allow_any_instance_of(ApplicationController)
+          .to receive(:current_user)
+          .and_return(user)
+
+        allow_any_instance_of(FestivalEngine)
+          .to receive(:on_tour_artists)
+          .and_return([])
+
+        visit '/'
+        click_on 'Top 5 Fests by All Time Top Artists'
+
+        expect(page).to have_content(
+          "None of your top artists are playing festivals. " \
+          "Try finding some festivals directly on Songkick."
+        )
+        expect(page).to have_link("Songkick")
+        expect(page).to_not have_css("#fest-1")
       end
     end
   end
