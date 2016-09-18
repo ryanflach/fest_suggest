@@ -81,23 +81,10 @@ class Artist
   end
 
   def self.compose_complete_artists_in_parallel(artists)
-    threads = []
-    complete_artists = []
-    artists_mutex = Mutex.new
-    artists.each do |artist|
-      threads << Thread.new(
-        artist, complete_artists
-      ) do |artist, complete_artists|
-        songkick_profile = songkick_data(artist[:name])
-        artists_mutex.synchronize do
-          complete_artists << create_complete_artist(
-            artist, songkick_profile
-          )
-        end
-      end
-    end
-    threads.each(&:join)
-    complete_artists.sort_by!(&:weight)
+    artists.map do |artist|
+      songkick_profile = songkick_data(artist[:name])
+      create_complete_artist(artist, songkick_profile)
+    end.sort_by!(&:weight)
   end
 
   def id

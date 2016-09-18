@@ -49,6 +49,11 @@ class Festival
     festival[:location][:city]
   end
 
+  def other_artists_count
+    festival[:performance].length -
+      (top_artists.length + rec_artists.length)
+  end
+
   private
 
   attr_reader :festival
