@@ -14,7 +14,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return(user)
 
         visit '/'
-        click_on 'top 5 by all time top artists'
+        click_on 'Top 5 Fests by All Time Top Artists'
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -48,7 +48,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return(user)
 
         visit '/'
-        click_on 'top 5 by artists last 6 months'
+        click_on "Top 5 Fests by Last 6 Month's Top Artists"
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -82,7 +82,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return(user)
 
         visit '/'
-        click_on 'top 5 by artists last 4 weeks'
+        click_on "Top 5 Fests by Last 4 Week's Top Artists"
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -120,7 +120,7 @@ RSpec.describe 'User views their top festivals' do
           .and_return([])
 
         visit '/'
-        click_on 'top 5 by all time top artists'
+        click_on 'Top 5 Fests by All Time Top Artists'
 
         expect(page).to have_content(
           "None of your top artists are playing festivals. " \

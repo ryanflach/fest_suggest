@@ -2,13 +2,11 @@ class SessionsController < ApplicationController
   def create
     user = User.process_spotify_user(@user_data)
     session[:user_id] = user.id
-    flash[:success] = 'Successfully logged in.'
     redirect_to root_path
   end
 
   def destroy
     session.clear
-    flash[:success] = 'Logged out. Thanks for visiting!'
     redirect_to root_path
   end
 

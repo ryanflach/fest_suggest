@@ -10,6 +10,16 @@ RSpec.describe 'Songkick service' do
         expect(artist_profile[:id]).to eq(118_509)
       end
     end
+
+    it "returns an empty hash if no artist found" do
+      VCR.use_cassette('songkick_service_artist_not_found') do
+        artist = 'asdfasdfsdfasdf'
+        artist_profile = Songkick::Service.new.artist_profile(artist)
+
+        expect(artist_profile).to eq({})
+        expect(artist_profile[:id]).to eq(nil)
+      end
+    end
   end
 
   context '#upcoming_events' do

@@ -14,12 +14,13 @@
         <%= sanitize(message) %>
       </div>
     <% end %>
-    <div class="container well page-content">
+    <div class="container">
       <center>
+        <h1><%= link_to "FestSuggest", root_path, class: 'fest-suggest' %></h1>
         <% if current_user %>
-          Welcome, <%= current_user.username %>! (<%= link_to "Logout", logout_path, method: :delete %>)
+          <%= link_to "X", logout_path, method: :delete, class: 'logout' %>
         <% else %>
-          <%= link_to "Login with Spotify", spotify_login_path %>
+          <%= link_to (image_tag 'spotify_login.svg', class: 'spotify-login', alt: 'Login with Spotify'), spotify_login_path %>
         <% end %>
       </center>
       <%= yield %>

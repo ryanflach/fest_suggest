@@ -1,18 +1,46 @@
-<center>
-  <h1>FestSuggest</h1>
-  <p>
-    
-  </p>
-</center>
-
-<center>
-  <% if current_user %>
-    <%= link_to "top 5 by all time top artists", festivals_path(range: 'long_term'), class: 'btn btn-default' %>
-    <%= link_to "top 5 by artists last 6 months", festivals_path(range: 'medium_term'), class: 'btn btn-default' %>
-    <%= link_to "top 5 by artists last 4 weeks", festivals_path(range: 'short_term'), class: 'btn btn-default' %>
+<% if current_user %>
+  <div class="well page-content">
+    <center>
+      <p>Tastes change over time. Use these buttons to see top artists for that time frame, then use the buttons at bottom to get festivals.</p>
+    </center>
+    <div class="col-md-3" id="top-artists-header"><p>Top Artists</p>
+      <div id='top-artists'></div>
+    </div>
+    <div class="col-md-2">
+      <%= link_to "All Time", artists_path(range: 'long_term'), class: 'btn btn-default', id: 'all-time-button' %>
+    </div>
+    <div class="col-md-2">
+      <%= link_to "Last 6 Months", artists_path(range: 'medium_term'), class: 'btn btn-default', id: '6-mo-button' %>
+    </div>
+    <div class="col-md-2">
+      <%= link_to "Last 4 Weeks", artists_path(range: 'short_term'), class: 'btn btn-default', id: '4-week-button' %>
+    </div>
+    <div id="top-festivals" class="col-md-9">
+      <table class="table table-striped table-responsive">
+        <thead>
+          <th>Rank</th>
+          <th>Festival Name</th>
+          <th>Location</th>
+          <th>Top Artists</th>
+          <th>Recommended Artists</th>
+          <th>Other Artists</th>
+        </thead>
+        <tbody id="top-fests-data">
+        </tbody>
+      </table>
+    </div>
     <br /><br />
-    <p>
-      <em>This website is currently in alpha testing. Response times are very slow. Please be patient, as requests can take nearly 1 full minute.</em>
-    </p>
-  <% end %>
-</center>
+    <div class="col-md-3 text-center">
+      <%= link_to "Top 5 Fests by All Time Top Artists", festivals_path(range: 'long_term'), class: 'btn btn-default', id: 'all-time-fest-button' %>
+    </div>
+    <div class="col-md-3 text-center">
+      <%= link_to "Top 5 Fests by Last 6 Month's Top Artists", festivals_path(range: 'medium_term'), class: 'btn btn-default', id: '6-mo-fest-button' %>
+    </div>
+    <div class="col-md-3 text-center">
+      <%= link_to "Top 5 Fests by Last 4 Week's Top Artists", festivals_path(range: 'short_term'), class: 'btn btn-default', id: '4-week-fest-button' %>
+    </div>
+    <div class="col-md-12 text-center">
+      <p><em>This website is currently in alpha testing. Response times are very slow. Please be patient, as requests can take nearly 1 full minute.</em></p>
+    </div>
+  </div>
+<% end %>
