@@ -105,4 +105,30 @@ RSpec.describe 'User views their top festivals' do
       end
     end
   end
+
+  context 'logged-in user no top artists with festivals' do
+    scenario 'they visit the root path' do
+      VCR.use_cassette('festival_top_5_none') do
+        user = create(:user)
+
+        allow_any_instance_of(ApplicationController)
+          .to receive(:current_user)
+          .and_return(user)
+
+        allow_any_instance_of(FestivalEngine)
+          .to receive(:on_tour_artists)
+          .and_return([])
+
+        visit '/'
+        click_on 'top 5 by all time top artists'
+
+        expect(page).to have_content(
+          "None of your top artists are playing festivals. " \
+          "Try finding some festivals directly on Songkick."
+        )
+        expect(page).to have_link("Songkick")
+        expect(page).to_not have_css("#fest-1")
+      end
+    end
+  end
 end
