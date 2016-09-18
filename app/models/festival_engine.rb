@@ -58,7 +58,7 @@ class FestivalEngine
         end
       end
     end
-    festivals
+    festivals.uniq
   end
 
   def top_artists_only(all_artists)

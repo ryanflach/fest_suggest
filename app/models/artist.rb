@@ -7,6 +7,7 @@ class Artist
     @weight = params[:artist][:weight]
     @on_tour_until = params[:songkick][:on_tour_until]
     @songkick_id = params[:songkick][:id]
+    @songkick_name = params[:songkick][:name]
   end
 
   def self.all(current_user, range)
@@ -45,7 +46,7 @@ class Artist
   end
 
   def name
-    artist[:name]
+    songkick_name || artist[:name]
   end
 
   def on_tour?
@@ -62,7 +63,8 @@ class Artist
       weight: spotify_data[:weight],
       songkick: {
         on_tour_until: songkick_profile[:onTourUntil],
-        id: songkick_profile[:id]
+        id: songkick_profile[:id],
+        name: songkick_profile[:displayName]
       }
     )
   end
@@ -94,5 +96,6 @@ class Artist
   private
 
   attr_reader :artist,
-              :on_tour_until
+              :on_tour_until,
+              :songkick_name
 end
