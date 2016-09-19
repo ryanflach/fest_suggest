@@ -12,9 +12,10 @@ class User < ApplicationRecord
         refresh_token: data[:refresh_token],
         token_expiry: data[:token_expiry]
       )
-      user
     else
-      create(data)
+      user = create(data)
+      # NewUserTopFestsWorker.perform_async(user.id)
     end
+    user
   end
 end

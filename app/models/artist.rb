@@ -33,7 +33,7 @@ class Artist
 
   def self.top_artists_complete(current_user, range)
     artists = artists_with_weight(current_user, range)
-    compose_complete_artists_in_parallel(artists)
+    compost_complete_artists(artists)
   end
 
   def self.recommended(current_user, top_artists)
@@ -82,7 +82,7 @@ class Artist
     )
   end
 
-  def self.compose_complete_artists_in_parallel(artists)
+  def self.compost_complete_artists(artists)
     artists.map do |artist|
       songkick_profile = songkick_data(artist[:name])
       create_complete_artist(artist, songkick_profile)

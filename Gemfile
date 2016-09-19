@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'figaro'
 gem 'faraday'
 gem 'twitter-bootstrap-rails'
+# gem 'sidekiq'
+# gem 'redis-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -52,6 +54,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'vcr'
   gem 'webmock'
+  gem 'poltergeist'
 end
 
 gem 'rails_12factor', group: :production
