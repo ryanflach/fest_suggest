@@ -5,12 +5,14 @@ class User < ApplicationRecord
   validates :token_expiry, presence: true
 
   def self.process_spotify_user(data)
-    if find_by_username(data[:username])
-      update(
+    user = find_by_username(data[:username])
+    if user
+      user.update(
         access_token: data[:access_token],
         refresh_token: data[:refresh_token],
         token_expiry: data[:token_expiry]
-      ).first
+      )
+      user
     else
       create(data)
     end
