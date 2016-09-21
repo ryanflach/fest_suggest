@@ -13,6 +13,7 @@ function hideInitialElements(){
   $('#top-festivals').hide();
   $('#progress-bar').hide();
   $('#loading-status').hide();
+  $('#songkick').hide();
 }
 
 function loadingBar(){
@@ -148,6 +149,7 @@ function renderFestivals(festivalsData){
   $('#top-fests-data').html(festivalsData);
   loadingStatusCleanup();
   $('#top-festivals').show();
+  $('#songkick').fadeIn('fast');
 }
 
 function loadingStatusCleanup(){
