@@ -11,8 +11,8 @@ describe Festival do
       festivals = Festival.all(top_artists)
 
       expect(festivals.first).to be_a(Festival)
-      expect(festivals.length).to eq(19)
-      expect(festivals.first.name).to eq('Riot Fest Chicago 2016')
+      expect(festivals.length).to eq(17)
+      expect(festivals.first.name).to eq('Field Day 2017')
       expect(festivals.first.start_date)
         .to be <= festivals.second.start_date
       expect(festivals.first.url).to include('songkick.com')

@@ -1,6 +1,6 @@
 class FestivalsController < ApplicationController
   def index
-    artists = Artist.all(current_user, params[:range])
-    @festivals = Festival.top_festivals(artists)
+    @festivals =
+      FestCacher.new(current_user, params[:range]).process_cache
   end
 end

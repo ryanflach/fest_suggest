@@ -49,9 +49,9 @@ RSpec.describe 'Spotify service' do
         top_artist = top_25.first
         second_artist = top_25.second
 
-        expect(top_25.length).to eq(17)
+        expect(top_25.length).to eq(24)
         expect(top_artist[:name]).to eq('Local Natives')
-        expect(second_artist[:name]).to eq('Sufjan Stevens')
+        expect(second_artist[:name]).to eq('Frank Ocean')
       end
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe 'Spotify service' do
 
         expect(recommended.length).to eq(100)
         expect(recommended.first[:artists].first[:name])
-          .to eq('Sufjan Stevens')
+          .to eq('Wye Oak')
       end
     end
   end
