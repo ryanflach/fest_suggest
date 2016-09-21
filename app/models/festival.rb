@@ -18,6 +18,7 @@ class Festival
   end
 
   def self.top_festivals(all_artists)
+    return [] if all_artists.empty?
     festivals = FestivalEngine.new(all_artists).top_5_festivals
     festivals.map do |festival|
       Festival.new(

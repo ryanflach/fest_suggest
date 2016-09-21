@@ -12,6 +12,7 @@ class Artist
 
   def self.all(current_user, range)
     top_artists = top_artists_complete(current_user, range)
+    return [] if top_artists.empty?
     recommended_artists = recommended(current_user, top_artists)
     top_artists + recommended_artists
   end
