@@ -18,6 +18,7 @@ function hideInitialElements(){
 
 function loadingBar(){
   $('#top-festivals').hide();
+  $('#songkick').hide();
   $('.progress-bar').attr('aria-valuenow', 5).css('width', '5%');
   $('#progress-bar').fadeIn('fast');
   $('#loading-status').hide().html('Gathering recommended artists from Spotify based on your selected top artists...').fadeIn('slow');
@@ -156,9 +157,9 @@ function loadingStatusCleanup(){
   $('.progress-bar').attr('aria-valuenow', 100).css('width', '100%');
   $('#progress-bar').fadeOut('fast');
   $('#loading-status').hide();
-  clearTimeout(loadingStageOne);
-  clearTimeout(loadingStageTwo);
-  clearTimeout(loadingStageThree);
+  if ('loadingStageOne' in window) clearTimeout(loadingStageOne);
+  if ('loadingStageTwo' in window) clearTimeout(loadingStageTwo);
+  if ('loadingStageThree' in window) clearTimeout(loadingStageThree);
 }
 
 function collectFestivals(festivalsData){
