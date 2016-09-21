@@ -20,9 +20,18 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
 }
 
+@media screen {
+  .page-content:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
 .artist {
-  font-family: sans-serif;
+  font-family: 'Rock Salt', cursive;
   font-weight: bold;
+  font-size: 1em;
 }
 
 .spotify-login {
@@ -33,7 +42,7 @@ body {
 
 .fest-suggest, .fest-suggest:hover {
   text-align: center;
-  font-family: 'Rock Salt';
+  font-family: 'Rock Salt', cursive;
   font-size: 5.5vw;
   margin-top: 2%;
   color: black;
@@ -41,11 +50,41 @@ body {
 }
 
 .logout, .logout:hover {
-  font-family: 'Rock Salt';
+  font-family: 'Rock Salt', cursive;
   font-size: 2.5vw;
   color: black;
   text-decoration: none;
   position: absolute;
   right: 2%;
   top: 2%;
+}
+
+.info {
+  margin: 20px 0px;
+}
+
+.btn {
+  background-color: #26215C;
+  color: white;
+  font-family: 'Lato', sans-serif;
+}
+
+.info-header {
+  font-family: 'Lato', sans-serif;
+  font-size: 1.25em;
+  margin-bottom: 10px;
+}
+
+.header {
+  text-decoration: underline;
+  font-family: 'Gudea', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 2%;
+}
+
+tbody {
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
 }

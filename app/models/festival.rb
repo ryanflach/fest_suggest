@@ -34,11 +34,11 @@ class Festival
   end
 
   def start_date
-    festival[:start][:date]
+    festival[:start][:date].split('-')[1..2].join('/')
   end
 
   def end_date
-    festival[:end][:date]
+    festival[:end][:date].split('-')[1..2].join('/')
   end
 
   def url

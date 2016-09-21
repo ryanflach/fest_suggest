@@ -5,7 +5,7 @@ RSpec.describe 'User views their top festivals' do
   before(:all) { refresh_access_token if token_expired? }
 
   context 'logged-in user for all time top artists' do
-    scenario 'they visit the root path' do
+    scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_all') do
         user = create(:user)
 
@@ -20,6 +20,7 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Rank')
           expect(page).to have_content('Festival Name')
           expect(page).to have_content('Location')
+          expect(page).to have_content('Dates')
           expect(page).to have_content('Top Artists')
           expect(page).to have_content('Recommended Artists')
           expect(page).to have_content('Other Artists')
