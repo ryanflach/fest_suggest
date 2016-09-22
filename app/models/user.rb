@@ -14,7 +14,6 @@ class User < ApplicationRecord
       )
     else
       user = create(data)
-      # NewUserTopFestsWorker.perform_async(user.id)
     end
     user
   end
