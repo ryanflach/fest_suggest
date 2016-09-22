@@ -50,7 +50,11 @@ class ArtistEngine
 
   def compose_complete_artists(artists)
     artists.map do |artist|
-      songkick_profile = songkick_data(artist[:name])
+      songkick_profile = Rails.cache.fetch(
+        "#{artist[:name]}", expires_in: 1.hour
+      ) do
+        songkick_data(artist[:name])
+      end
       create_complete_artist(artist, songkick_profile)
     end.sort_by!(&:weight)
   end
