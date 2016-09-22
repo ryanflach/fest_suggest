@@ -10,19 +10,16 @@ class Artist
     @songkick_name = params[:songkick][:name]
   end
 
-  def self.all(current_user, range)
-    top_artists = top_artists_complete(current_user, range)
-    return [] if top_artists.empty?
-    recommended_artists = recommended(current_user, top_artists)
-    top_artists + recommended_artists
-  end
-
   def self.spotify_service(current_user)
     Spotify::Service.new(current_user.access_token)
   end
 
-  def self.songkick_service
-    Songkick::Service.new
+  def self.all(current_user, range)
+    engine = ArtistEngine.new(current_user, range)
+    top_artists = engine.complete_top_artists
+    return [] if top_artists.empty?
+    recommended_artists = engine.recommended(top_artists)
+    top_artists + recommended_artists
   end
 
   def self.top_spotify_artists(current_user, range)
@@ -33,17 +30,12 @@ class Artist
   end
 
   def self.top_artists_complete(current_user, range)
-    artists = artists_with_weight(current_user, range)
-    compost_complete_artists(artists)
+    engine = ArtistEngine.new(current_user, range)
+    artists = engine.complete_top_artists
   end
 
-  def self.recommended(current_user, top_artists)
-    artists = RecommendationEngine.new(current_user, top_artists)
-                                  .unique_recommended
-    artists.map do |artist|
-      artist[:weight] = 26
-      Artist.new(artist: artist, songkick: {})
-    end
+  def id
+    artist[:id]
   end
 
   def name
@@ -54,48 +46,7 @@ class Artist
     on_tour_until
   end
 
-  def self.songkick_data(artist_name)
-    songkick_service.artist_profile(artist_name)
-  end
-
-  def self.create_complete_artist(spotify_data, songkick_profile)
-    Artist.new(
-      artist: spotify_data,
-      weight: spotify_data[:weight],
-      songkick: {
-        on_tour_until: songkick_profile[:onTourUntil],
-        id: songkick_profile[:id],
-        name: songkick_profile[:displayName]
-      }
-    )
-  end
-
-  def self.add_artist_weight(artists)
-    artists.map.with_index(1) do |artist, weight|
-      artist[:weight] = weight
-    end
-    artists
-  end
-
-  def self.artists_with_weight(current_user, range)
-    add_artist_weight(
-      spotify_service(current_user).top_25_artists(range)
-    )
-  end
-
-  def self.compost_complete_artists(artists)
-    artists.map do |artist|
-      songkick_profile = songkick_data(artist[:name])
-      create_complete_artist(artist, songkick_profile)
-    end.sort_by!(&:weight)
-  end
-
-  def id
-    artist[:id]
-  end
-
   private
-
   attr_reader :artist,
               :on_tour_until,
               :songkick_name
