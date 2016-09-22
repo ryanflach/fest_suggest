@@ -1,4 +1,4 @@
-class RecommendationEngine
+class ArtistRecommendationEngine
   def initialize(user, top_artists)
     @user = user
     @top_artists = top_artists
