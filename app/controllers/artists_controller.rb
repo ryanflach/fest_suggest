@@ -1,5 +1,6 @@
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.top_spotify_artists(current_user, params[:range])
+    @artists = Cacher.new(current_user, params[:range])
+                     .process_artist_cache
   end
 end

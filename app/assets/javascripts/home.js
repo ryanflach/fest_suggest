@@ -15,13 +15,14 @@ function hideInitialElements(){
   $('#progress-bar').hide();
   $('#loading-status').hide();
   $('#songkick').hide();
+  $('.progress-bar').attr('aria-valuenow', 0).css('width', '0%');
   clearActiveTimeouts();
 }
 
 function loadingBar(){
   hideInitialElements();
-  $('.progress-bar').attr('aria-valuenow', 5).css('width', '5%');
   $('#progress-bar').fadeIn('fast');
+  $('.progress-bar').attr('aria-valuenow', 5).css('width', '5%');
   $('#loading-status').hide().html('Gathering recommended artists from Spotify based on your selected top artists...').fadeIn('slow');
   loadingStageOne = setTimeout(theWheelsAreInMotion, 5000);
 }
