@@ -19,6 +19,7 @@ class ArtistEngine
   end
 
   private
+
   attr_reader :user,
               :range
 
@@ -57,5 +58,4 @@ class ArtistEngine
   def songkick_data(artist_name)
     Songkick::Service.new.artist_profile(artist_name)
   end
-
 end

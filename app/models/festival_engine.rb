@@ -24,7 +24,9 @@ class FestivalEngine
               :recommended_artists
 
   def on_tour_artists
-    top_artists.map { |artist| artist if artist.on_tour? }.compact
+    @on_tour ||= top_artists.map do |artist|
+      artist if artist.on_tour?
+    end.compact
   end
 
   def num_top_artists_with_festivals

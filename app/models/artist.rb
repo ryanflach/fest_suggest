@@ -31,7 +31,7 @@ class Artist
 
   def self.top_artists_complete(current_user, range)
     engine = ArtistEngine.new(current_user, range)
-    artists = engine.complete_top_artists
+    engine.complete_top_artists
   end
 
   def id
