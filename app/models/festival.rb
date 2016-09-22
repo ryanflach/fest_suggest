@@ -3,18 +3,11 @@ class Festival
               :top_artists,
               :rec_artists
 
-  def initialize(params, score = nil, top_artists = nil, rec_artists = nil)
+  def initialize(params, score=nil, top_artists=nil, rec_artists=nil)
     @festival = params
     @score = score
     @top_artists = top_artists
     @rec_artists = rec_artists
-  end
-
-  def self.all(artists)
-    festivals = FestivalEngine.new(artists).unique_festivals
-    festivals.map do |festival|
-      Festival.new(festival)
-    end.sort_by(&:start_date)
   end
 
   def self.top_festivals(all_artists)

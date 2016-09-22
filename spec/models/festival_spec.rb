@@ -4,23 +4,6 @@ include SpotifyHelper
 describe Festival do
   before(:all) { refresh_access_token if token_expired? }
 
-  it "returns all unique festivals for given artists" do
-    VCR.use_cassette('festival_all') do
-      user = create(:user)
-      top_artists = Artist.top_artists_complete(user, 'long_term')
-      festivals = Festival.all(top_artists)
-
-      expect(festivals.first).to be_a(Festival)
-      expect(festivals.length).to eq(17)
-      expect(festivals.first.name).to eq('Field Day 2017')
-      expect(festivals.first.start_date)
-        .to be <= festivals.second.start_date
-      expect(festivals.first.url).to include('songkick.com')
-      expect(festivals.first.end_date)
-        .to be >= festivals.first.start_date
-    end
-  end
-
   context 'with artists present' do
     it "returns the top 5 fests based on top and recommended artists" do
       VCR.use_cassette('festival_top_5_all') do
