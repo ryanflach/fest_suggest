@@ -5,8 +5,9 @@ $(document).ready(function(){
   allTimeFestButton();
   sixMonthFestButton();
   fourWeekFestButton();
-  $('#all-time-button').click();
   hideInitialElements();
+  $('#all-time-button').click();
+  $('#all-time-fest-button').click();
 });
 
 function hideInitialElements(){
@@ -14,11 +15,11 @@ function hideInitialElements(){
   $('#progress-bar').hide();
   $('#loading-status').hide();
   $('#songkick').hide();
+  clearActiveTimeouts();
 }
 
 function loadingBar(){
-  $('#top-festivals').hide();
-  $('#songkick').hide();
+  hideInitialElements();
   $('.progress-bar').attr('aria-valuenow', 5).css('width', '5%');
   $('#progress-bar').fadeIn('fast');
   $('#loading-status').hide().html('Gathering recommended artists from Spotify based on your selected top artists...').fadeIn('slow');
@@ -157,6 +158,10 @@ function loadingStatusCleanup(){
   $('.progress-bar').attr('aria-valuenow', 100).css('width', '100%');
   $('#progress-bar').fadeOut('fast');
   $('#loading-status').hide();
+  clearActiveTimeouts();
+}
+
+function clearActiveTimeouts(){
   if ('loadingStageOne' in window) clearTimeout(loadingStageOne);
   if ('loadingStageTwo' in window) clearTimeout(loadingStageTwo);
   if ('loadingStageThree' in window) clearTimeout(loadingStageThree);
