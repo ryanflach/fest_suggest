@@ -5,8 +5,7 @@ RSpec.describe 'User views their top festivals' do
   before(:all) { refresh_access_token if token_expired? }
 
   context 'logged-in user for all time top artists' do
-    # Skipped due to switch to JavaScript and single-page app
-    xscenario 'they visit the root path' do
+    scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_all') do
         user = create(:user)
 
@@ -27,22 +26,22 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Other Artists')
         end
 
-        within("#fest-1") do
+        within("#fest-01") do
           expect(page)
             .to have_link('Austin City Limits Music Festival 2016')
           expect(page).to have_content('Local Natives')
-          expect(page).to have_content('Band of Horses')
-          expect(page).to have_content('99+')
+          expect(page).to have_content('Foals')
+          expect(page).to have_content('100+')
         end
 
-        expect(page).to_not have_css("#fest-6")
+        expect(page).to_not have_css("#fest-06")
       end
     end
   end
 
   context 'logged-in user for 6 month top artists' do
     # Skipped due to switch to JavaScript and single-page app
-    xscenario 'they visit the root path' do
+    scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_6_months') do
         user = create(:user)
 
@@ -62,22 +61,26 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Other Artists')
         end
 
-        within("#fest-1") do
+        within("#fest-01") do
           expect(page)
             .to have_link('Austin City Limits Music Festival 2016')
+          expect(page).to have_content('Local Natives')
+          expect(page).to have_content('Foals')
           expect(page).to have_content('Kygo')
-          expect(page).to have_content('N/A')
-          expect(page).to have_content('97+')
+          expect(page).to have_content('LCD Soundsystem')
+          expect(page).to have_content('Cold War Kids')
+          expect(page).to have_content('Andrew Bird')
+          expect(page).to have_content('Band of Horses')
+          expect(page).to have_content('95+')
         end
 
-        expect(page).to_not have_css("#fest-6")
+        expect(page).to_not have_css("#fest-06")
       end
     end
   end
 
   context 'logged-in user for 4 week top artists' do
-    # Skipped due to switch to JavaScript and single-page app
-    xscenario 'they visit the root path' do
+    scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_4_weeks') do
         user = create(:user)
 
@@ -97,22 +100,22 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Other Artists')
         end
 
-        within("#fest-1") do
+        within("#fest-01") do
           expect(page)
             .to have_link('Austin City Limits Music Festival 2016')
+          expect(page).to have_content('Local Natives')
           expect(page).to have_content('Young the Giant')
-          expect(page).to have_content('The Front Bottoms')
-          expect(page).to have_content('97+')
+          expect(page).to have_content('Kendrick Lamar')
+          expect(page).to have_content('99+')
         end
 
-        expect(page).to_not have_css("#fest-6")
+        expect(page).to_not have_css("#fest-06")
       end
     end
   end
 
   context 'logged-in user no top artists with festivals' do
-    # Skipped due to switch to JavaScript and single-page app
-    xscenario 'they visit the root path' do
+    scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_none') do
         user = create(:user)
 
@@ -128,7 +131,7 @@ RSpec.describe 'User views their top festivals' do
         click_on 'Top 5 Fests by All Time Top Artists'
 
         expect(page).to have_link("Songkick")
-        expect(page).to_not have_css("#fest-1")
+        expect(page).to_not have_css("#fest-01")
       end
     end
   end
