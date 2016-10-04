@@ -55,6 +55,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'vcr'
   gem 'webmock'
+  gem 'selenium-webdriver'
 end
 
 gem 'rails_12factor', group: :production
