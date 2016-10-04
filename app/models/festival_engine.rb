@@ -80,16 +80,18 @@ class FestivalEngine
   end
 
   def score_festival(fest)
-    max_top_artists_at_fest = num_top_artists_with_festivals
+    max_num_top_artists_at_fest = num_top_artists_with_festivals
     top_artists_at_fest = filter_artists(fest, top_artists)
-    rec_artists_at_fest = filter_artists(fest, recommended_artists)
-    if max_top_artists_at_fest == top_artists_at_fest.length
-      -rec_artists_at_fest.length
+    num_top_artists_at_fest = top_artists_at_fest.length
+    num_rec_artists_at_fest =
+      filter_artists(fest, recommended_artists).length
+    if max_num_top_artists_at_fest == num_top_artists_at_fest
+      -num_rec_artists_at_fest
     else
       score_artists(top_artists_at_fest) /
-        top_artists_at_fest.length -
-        rec_artists_at_fest.length -
-        (top_artists_at_fest.length * 4)
+        num_top_artists_at_fest -
+        num_rec_artists_at_fest -
+        num_top_artists_at_fest * 5
     end
   end
 

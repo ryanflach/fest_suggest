@@ -28,7 +28,7 @@ RSpec.describe FestivalsController, type: :request do
       expect(festivals.first).to_not have_key('created_at')
       expect(festivals.first).to_not have_key('updated_at')
       expect(festivals.first['top_artists'].first).to have_key('name')
-      expect(festivals.first['rec_artists'].first).to have_key('name')
+      expect(festivals.third['rec_artists'].first).to have_key('name')
     end
   end
 
