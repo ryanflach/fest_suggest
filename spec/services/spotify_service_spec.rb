@@ -69,7 +69,7 @@ RSpec.describe 'Spotify service' do
 
         expect(recommended.length).to eq(100)
         expect(recommended.first[:artists].first[:name])
-          .to eq('Surfer Blood')
+          .to eq('Sufjan Stevens')
       end
     end
   end

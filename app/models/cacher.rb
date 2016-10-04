@@ -13,7 +13,7 @@ class Cacher
   end
 
   def process_artist_cache
-    label = "top_artists_#{range}"
+    label = "#{user.id}-top-artists-#{range}"
     Rails.cache.fetch(label, expires_in: 1.hour) do
       Artist.top_spotify_artists(user, range)
     end
