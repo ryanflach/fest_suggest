@@ -80,18 +80,16 @@ class FestivalEngine
   end
 
   def score_festival(fest)
-    max_num_top_artists_at_fest = num_top_artists_with_festivals
     top_artists_at_fest = filter_artists(fest, top_artists)
-    num_top_artists_at_fest = top_artists_at_fest.length
+    num_top_artists_bonus = top_artists_at_fest.length * 5
     num_rec_artists_at_fest =
       filter_artists(fest, recommended_artists).length
-    if max_num_top_artists_at_fest == num_top_artists_at_fest
+    if num_top_artists_with_festivals == top_artists_at_fest.length
       -num_rec_artists_at_fest
     else
-      score_artists(top_artists_at_fest) /
-        num_top_artists_at_fest -
+      average_artists_score(top_artists_at_fest) -
         num_rec_artists_at_fest -
-        num_top_artists_at_fest * 5
+        num_top_artists_bonus
     end
   end
 
@@ -107,7 +105,8 @@ class FestivalEngine
     end
   end
 
-  def score_artists(artists)
-    artists.reduce(0) { |value, artist| value += artist.weight }
+  def average_artists_score(artists)
+    size = artists.length
+    artists.reduce(0) { |value, artist| value += artist.weight } / size
   end
 end
