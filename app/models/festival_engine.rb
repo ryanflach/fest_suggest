@@ -81,7 +81,7 @@ class FestivalEngine
 
   def score_festival(fest)
     top_artists_at_fest = filter_artists(fest, top_artists)
-    num_top_artists_bonus = top_artists_at_fest.length * 5
+    num_top_artists_bonus = top_artists_at_fest.length * 10
     num_rec_artists_at_fest =
       filter_artists(fest, recommended_artists).length
     if num_top_artists_with_festivals == top_artists_at_fest.length
