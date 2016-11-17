@@ -67,6 +67,8 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    ethon (0.9.1)
+      ffi (>= 1.3.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
@@ -225,6 +227,8 @@ GEM
       execjs (>= 2.2.2, >= 2.2)
       less-rails (>= 2.5.0)
       railties (>= 3.1)
+    typhoeus (1.1.0)
+      ethon (>= 0.9.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.2)
@@ -273,6 +277,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   twitter-bootstrap-rails
+  typhoeus
   tzinfo-data
   uglifier (>= 1.3.0)
   vcr
