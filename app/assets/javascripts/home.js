@@ -30,13 +30,13 @@ function loadingBar(){
 function theWheelsAreInMotion(){
   $('.progress-bar').attr('aria-valuenow', 30).css('width', '30%');
   $('#loading-status').hide().html('Gathering Songkick data for each of your top artists...').fadeIn('slow');
-  loadingStageTwo = setTimeout(sweetProgress, 2000);
+  loadingStageTwo = setTimeout(sweetProgress, 1250);
 }
 
 function sweetProgress(){
   $('.progress-bar').attr('aria-valuenow', 55).css('width', '55%');
   $('#loading-status').hide().html('Determining which top artists have upcoming festivals...').fadeIn('slow');
-  loadingStageThree = setTimeout(finalCountdown, 2000);
+  loadingStageThree = setTimeout(finalCountdown, 1250);
 }
 
 function finalCountdown(){
