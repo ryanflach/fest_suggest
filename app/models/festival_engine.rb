@@ -46,7 +46,7 @@ class FestivalEngine
   end
 
   def all_upcoming_events
-    artist_ids = on_tour_artists.map { |artist| artist.songkick_id }
+    artist_ids = on_tour_artists.map(&:songkick_id)
     Songkick::Service.new.upcoming_events(artist_ids)
   end
 

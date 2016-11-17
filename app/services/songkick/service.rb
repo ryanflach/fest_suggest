@@ -32,7 +32,7 @@ module Songkick
         request = Typhoeus::Request.new(
           "#{base_url}/api/3.0/artists/#{id}/calendar.json",
           params: {
-            apikey: ENV['SONGKICK_KEY'],
+            apikey: ENV['SONGKICK_KEY']
           }
         )
         request_pool.queue(request)
@@ -71,6 +71,5 @@ module Songkick
 
     attr_reader :base_url,
                 :request_pool
-
   end
 end

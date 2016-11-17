@@ -42,16 +42,16 @@ RSpec.describe 'Spotify service' do
       end
     end
 
-    it "gets a user's top 25 artists for the last 4 weeks" do
+    it "gets a user's max top 25 artists for the last 4 weeks" do
       VCR.use_cassette('spotify_service_top_artists_short_term') do
         top_25 = Spotify::Service.new(ENV['ACCESS_TOKEN'])
                                  .top_25_artists('short_term')
         top_artist = top_25.first
         second_artist = top_25.second
 
-        expect(top_25.length).to eq(25)
-        expect(top_artist[:name]).to eq('Local Natives')
-        expect(second_artist[:name]).to eq('Frank Ocean')
+        expect(top_25.length).to eq(22)
+        expect(top_artist[:name]).to eq('Bon Iver')
+        expect(second_artist[:name]).to eq('Tycho')
       end
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe 'Spotify service' do
 
         expect(recommended.length).to eq(100)
         expect(recommended.first[:artists].first[:name])
-          .to eq('Surfer Blood')
+          .to eq('Wye Oak')
       end
     end
   end

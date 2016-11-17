@@ -27,8 +27,9 @@ RSpec.describe FestivalsController, type: :request do
       expect(festivals.first).to_not have_key('id')
       expect(festivals.first).to_not have_key('created_at')
       expect(festivals.first).to_not have_key('updated_at')
+      expect(festivals.first).to have_key('top_artists')
+      expect(festivals.first).to have_key('rec_artists')
       expect(festivals.first['top_artists'].first).to have_key('name')
-      expect(festivals.second['rec_artists'].first).to have_key('name')
     end
   end
 
@@ -55,8 +56,9 @@ RSpec.describe FestivalsController, type: :request do
       expect(festivals.first).to_not have_key('id')
       expect(festivals.first).to_not have_key('created_at')
       expect(festivals.first).to_not have_key('updated_at')
+      expect(festivals.first).to have_key('top_artists')
+      expect(festivals.first).to have_key('rec_artists')
       expect(festivals.first['top_artists'].first).to have_key('name')
-      expect(festivals.first['rec_artists'].first).to have_key('name')
     end
   end
 
@@ -74,17 +76,18 @@ RSpec.describe FestivalsController, type: :request do
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to eq('application/json')
-      expect(festivals.first).to have_key('name')
-      expect(festivals.first).to have_key('location')
-      expect(festivals.first).to have_key('start_date')
-      expect(festivals.first).to have_key('end_date')
-      expect(festivals.first).to have_key('url')
-      expect(festivals.first).to have_key('other_artists_count')
-      expect(festivals.first).to_not have_key('id')
-      expect(festivals.first).to_not have_key('created_at')
-      expect(festivals.first).to_not have_key('updated_at')
+      expect(festivals.fourth).to have_key('name')
+      expect(festivals.fourth).to have_key('location')
+      expect(festivals.fourth).to have_key('start_date')
+      expect(festivals.fourth).to have_key('end_date')
+      expect(festivals.fourth).to have_key('url')
+      expect(festivals.fourth).to have_key('other_artists_count')
+      expect(festivals.fourth).to_not have_key('id')
+      expect(festivals.fourth).to_not have_key('created_at')
+      expect(festivals.fourth).to_not have_key('updated_at')
+      expect(festivals.first).to have_key('top_artists')
+      expect(festivals.first).to have_key('rec_artists')
       expect(festivals.first['top_artists'].first).to have_key('name')
-      expect(festivals.first['rec_artists'].first).to have_key('name')
     end
   end
 end

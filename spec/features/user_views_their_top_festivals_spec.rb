@@ -16,6 +16,9 @@ RSpec.describe 'User views their top festivals' do
         visit '/'
         click_on 'Top 5 Fests by All Time Top Artists'
 
+        # Wait for requests
+        sleep(8)
+
         within('table thead') do
           expect(page).to have_content('Rank')
           expect(page).to have_content('Festival Name')
@@ -28,10 +31,11 @@ RSpec.describe 'User views their top festivals' do
 
         within("#fest-01") do
           expect(page)
-            .to have_link('Austin City Limits Music Festival 2016')
-          expect(page).to have_content('Local Natives')
+            .to have_link("Neon Lights Festival 2016")
           expect(page).to have_content('Foals')
-          expect(page).to have_content('100+')
+          expect(page).to have_content('Sigur Rós')
+          expect(page).to have_content('José González')
+          expect(page).to have_content('16+')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -40,7 +44,6 @@ RSpec.describe 'User views their top festivals' do
   end
 
   context 'logged-in user for 6 month top artists' do
-    # Skipped due to switch to JavaScript and single-page app
     scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_6_months') do
         user = create(:user)
@@ -51,6 +54,9 @@ RSpec.describe 'User views their top festivals' do
 
         visit '/'
         click_on "Top 5 Fests by Last 6 Month's Top Artists"
+
+        # Wait for requests
+        sleep(8)
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -63,15 +69,10 @@ RSpec.describe 'User views their top festivals' do
 
         within("#fest-01") do
           expect(page)
-            .to have_link('Austin City Limits Music Festival 2016')
-          expect(page).to have_content('Local Natives')
-          expect(page).to have_content('Foals')
-          expect(page).to have_content('Kygo')
-          expect(page).to have_content('LCD Soundsystem')
-          expect(page).to have_content('Cold War Kids')
-          expect(page).to have_content('Andrew Bird')
-          expect(page).to have_content('Band of Horses')
-          expect(page).to have_content('95+')
+            .to have_link("Live 105's Not So Silent Night 2016")
+          expect(page).to have_content('Phantogram')
+          expect(page).to have_content('The Head and the Heart')
+          expect(page).to have_content('11+')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -91,6 +92,9 @@ RSpec.describe 'User views their top festivals' do
         visit '/'
         click_on "Top 5 Fests by Last 4 Week's Top Artists"
 
+        # Wait for requests
+        sleep(8)
+
         within('table thead') do
           expect(page).to have_content('Rank')
           expect(page).to have_content('Festival Name')
@@ -102,11 +106,9 @@ RSpec.describe 'User views their top festivals' do
 
         within("#fest-01") do
           expect(page)
-            .to have_link('Austin City Limits Music Festival 2016')
-          expect(page).to have_content('Local Natives')
-          expect(page).to have_content('Young the Giant')
-          expect(page).to have_content('Kendrick Lamar')
-          expect(page).to have_content('99+')
+            .to have_link('Laneway Festival 2017')
+          expect(page).to have_content('Tycho')
+          expect(page).to have_content('19+')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -129,6 +131,9 @@ RSpec.describe 'User views their top festivals' do
 
         visit '/'
         click_on 'Top 5 Fests by All Time Top Artists'
+
+        # Wait for requests
+        sleep(3)
 
         expect(page).to have_link("Songkick")
         expect(page).to_not have_css("#fest-01")
