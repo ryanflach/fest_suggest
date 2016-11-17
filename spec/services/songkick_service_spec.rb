@@ -1,46 +1,52 @@
 require 'rails_helper'
 
 RSpec.describe 'Songkick service' do
-  context '#artist_profile' do
-    it "returns an artist's basic profile" do
+  context '#artist_profiles' do
+    it "returns basic profiles for a collection of artists" do
       VCR.use_cassette('songkick_service_artist_profile') do
-        artist = 'Sufjan Stevens'
-        artist_profile = Songkick::Service.new.artist_profile(artist)
+        artists = ['Sufjan Stevens', 'Bon Iver']
+        artist_profiles = Songkick::Service.new.artist_profiles(artists)
 
-        expect(artist_profile[:id]).to eq(118_509)
+        expect(artist_profiles[artists.first][:id]).to eq(118_509)
+        expect(artist_profiles[artists.last][:id]).to eq(590_705)
       end
     end
 
-    it "returns an empty hash if no artist found" do
+    it "returns an name and empty hash if no artist found" do
       VCR.use_cassette('songkick_service_artist_not_found') do
-        artist = 'asdfasdfsdfasdf'
-        artist_profile = Songkick::Service.new.artist_profile(artist)
+        artist = ['asdfasdfsdfasdf']
+        artist_profile = Songkick::Service.new.artist_profiles(artist)
 
-        expect(artist_profile).to eq({})
-        expect(artist_profile[:id]).to eq(nil)
+        expect(artist_profile[artist.first]).to eq({})
+        expect(artist_profile[artist.first][:id]).to eq(nil)
       end
     end
   end
 
   context '#upcoming_events' do
-    it "returns an artist's upcoming events by artist id" do
+    it "returns artists' upcoming events by artist id" do
       VCR.use_cassette('songkick_service_upcoming_events') do
-        artist_id = 403_540_6
+        artist_ids = [403_540_6, 590_705]
         upcoming_events = Songkick::Service.new
-                                           .upcoming_events(artist_id)
+                                           .upcoming_events(artist_ids)
 
-        expect(upcoming_events.last[:type]).to eq('Concert')
-        expect(upcoming_events.last[:displayName])
+        expect(upcoming_events.first.last[:type]).to eq('Concert')
+        expect(upcoming_events.first.last[:displayName])
           .to eq(
-            'Kishi Bashi with Laura Gibson at' \
-            ' Variety Playhouse (November 2, 2016)'
+            'Kishi Bashi with Lee Fields & The Expressions, ' \
+            'City of the Sun, Ezra Furman, and 35 more… at ' \
+            'Savannah Sinfonietta & Chamber Players Historic ' \
+            'District Packages (March 9, 2017)'
           )
       end
     end
   end
 
+  # Skipped due to being solely planned functionality - method arguments
+  # will need to be adjusted (take a collection rather than a single id)
+  # due to the use of Typhoeus.
   context '#past_events' do
-    it "returns an artist's past events from start of year by id" do
+    xit "returns an artist's past events from start of year by id" do
       VCR.use_cassette('songkick_service_past_events') do
         artist_id = 118_509
         past_events = Songkick::Service.new.past_events(artist_id)

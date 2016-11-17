@@ -1,23 +1,31 @@
 class Spotify::Service < Base
   def initialize(token)
-    @token = token
-    @connection = initialize_connection
+    @base_url = 'https://api.spotify.com'
+    @headers  = { 'Authorization': "Bearer #{token}" }
   end
 
   def recommended_artists(top_5_artist_ids)
-    response = connection.get('/v1/recommendations') do |request|
-      request.params[:seed_artists] = top_5_artist_ids
-      request.params[:limit] = 100
-    end
-    parse(response.body)[:tracks]
+    request = Typhoeus::Request.new(
+      "#{base_url}/v1/recommendations",
+      headers: headers,
+      params: {
+        seed_artists: top_5_artist_ids,
+        limit: 100
+      }
+    ).run
+    parse(request.response_body)[:tracks]
   end
 
   def top_25_artists(time_range)
-    response = connection.get('/v1/me/top/artists') do |request|
-      request.params[:limit] = 25
-      request.params[:time_range] = time_range
-    end
-    parse(response.body)[:items]
+    request = Typhoeus::Request.new(
+      "#{base_url}/v1/me/top/artists",
+      headers: headers,
+      params: {
+        limit: 25,
+        time_range: time_range
+      }
+    ).run
+    parse(request.response_body)[:items]
   end
 
   def get_username
@@ -27,18 +35,14 @@ class Spotify::Service < Base
 
   private
 
-  attr_reader :token,
-              :connection
-
-  def initialize_connection
-    Faraday.new('https://api.spotify.com') do |build|
-      build.adapter :net_http
-      build.headers['Authorization'] = "Bearer #{token}"
-    end
-  end
+  attr_reader :base_url,
+              :headers
 
   def request_user_data
-    response = connection.get('/v1/me')
-    parse(response.body)
+    request = Typhoeus::Request.new(
+      "#{base_url}/v1/me",
+      headers: headers
+    ).run
+    parse(request.response_body)
   end
 end

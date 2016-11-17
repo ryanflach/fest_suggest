@@ -46,13 +46,8 @@ class FestivalEngine
   end
 
   def all_upcoming_events
-    on_tour_artists.map do |artist|
-      Rails.cache.fetch(
-        "#{artist.name}-upcoming-events", expires_in: 1.hour
-      ) do
-        Songkick::Service.new.upcoming_events(artist.songkick_id)
-      end
-    end
+    artist_ids = on_tour_artists.map(&:songkick_id)
+    Songkick::Service.new.upcoming_events(artist_ids)
   end
 
   def festivals_only
@@ -81,7 +76,7 @@ class FestivalEngine
 
   def score_festival(fest)
     top_artists_at_fest = filter_artists(fest, top_artists)
-    num_top_artists_bonus = top_artists_at_fest.length * 5
+    num_top_artists_bonus = top_artists_at_fest.length * 10
     num_rec_artists_at_fest =
       filter_artists(fest, recommended_artists).length
     if num_top_artists_with_festivals == top_artists_at_fest.length

@@ -60,7 +60,7 @@ RSpec.describe ArtistsController, type: :request do
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to eq('application/json')
-      expect(artists.first['name']).to eq('Local Natives')
+      expect(artists.first['name']).to eq('Bon Iver')
       expect(artists.first).to_not have_key('id')
       expect(artists.first).to_not have_key('created_at')
       expect(artists.first).to_not have_key('updated_at')
