@@ -46,13 +46,8 @@ class FestivalEngine
   end
 
   def all_upcoming_events
-    on_tour_artists.map do |artist|
-      Rails.cache.fetch(
-        "#{artist.name}-upcoming-events", expires_in: 1.hour
-      ) do
-        Songkick::Service.new.upcoming_events(artist.songkick_id)
-      end
-    end
+    artist_ids = on_tour_artists.map { |artist| artist.songkick_id }
+    Songkick::Service.new.upcoming_events(artist_ids)
   end
 
   def festivals_only
