@@ -17,12 +17,13 @@ and initialize the database:
 ```
 rake db:{create,migrate}
 ```
+
+_Note: API keys are required for both Spotify and Songkick. You can find more information on the Spotify API [here](https://developer.spotify.com/web-api/), and the Songkick API [here](http://www.songkick.com/developer). Both are well documented._
+
 Launch a server
 ```
 rails s
 ```
 Explore.
-
-_API keys are required for both Spotify and Songkick. You can find more information on the Spotify API [here](https://developer.spotify.com/web-api/), and the Songkick API [here](http://www.songkick.com/developer). Both are well documented._
 
 _Please note that, in the application's default state, [redis](https://github.com/redis-store/redis-rails) is required to enable caching._
