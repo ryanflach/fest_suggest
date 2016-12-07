@@ -22,9 +22,9 @@ RSpec.feature 'User persists login after token expires' do
 
     expect(page).to have_link('X')
     expect(page).to_not have_link('Login with Spotify')
-    expect(User.count).to eq(1)
-    expect(User.first.access_token).to eq('new_token')
-    expect(User.first.refresh_token).to eq('new_refresh')
-    expect(User.first.token_expiry).to eq('2016-09-11 22:33:08')
+    expect(User.count).to eq(2)
+    expect(User.last.access_token).to eq('new_token')
+    expect(User.last.refresh_token).to eq('new_refresh')
+    expect(User.last.token_expiry).to eq('2016-09-11 22:33:08')
   end
 end
