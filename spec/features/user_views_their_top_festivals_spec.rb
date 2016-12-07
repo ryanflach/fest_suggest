@@ -31,11 +31,12 @@ RSpec.describe 'User views their top festivals' do
 
         within("#fest-01") do
           expect(page)
-            .to have_link("Neon Lights Festival 2016")
-          expect(page).to have_content('Foals')
-          expect(page).to have_content('Sigur Rós')
-          expect(page).to have_content('José González')
-          expect(page).to have_content('16+')
+            .to have_link("Primavera Sound Festival 2017")
+          expect(page).to have_content('Local Natives')
+          expect(page).to have_content('Tycho')
+          expect(page).to have_content('Bon Iver')
+          expect(page).to have_content('Angel Olsen')
+          expect(page).to have_content('169+')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -69,10 +70,15 @@ RSpec.describe 'User views their top festivals' do
 
         within("#fest-01") do
           expect(page)
-            .to have_link("Live 105's Not So Silent Night 2016")
-          expect(page).to have_content('Phantogram')
-          expect(page).to have_content('The Head and the Heart')
-          expect(page).to have_content('11+')
+            .to have_link("Primavera Sound Festival 2017")
+          expect(page).to have_content('Local Natives')
+          expect(page).to have_content('Bon Iver')
+          expect(page).to have_content('Tycho')
+          expect(page).to have_content('Frank Ocean')
+          expect(page).to have_content('Mitski')
+          expect(page).to have_content('Kevin Morby')
+          expect(page).to have_content('Angel Olsen')
+          expect(page).to have_content('166+')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -106,9 +112,15 @@ RSpec.describe 'User views their top festivals' do
 
         within("#fest-01") do
           expect(page)
-            .to have_link('Laneway Festival 2017')
-          expect(page).to have_content('Tycho')
-          expect(page).to have_content('19+')
+            .to have_link('Primavera Sound Festival 2017')
+          expect(page).to have_content('Bon Iver')
+          expect(page).to have_content('BadBadNotGood')
+          expect(page).to have_content('Run The Jewels')
+          expect(page).to have_content('Mitski')
+          expect(page).to have_content('Local Natives')
+          expect(page).to have_content('Angel Olsen')
+          expect(page).to have_content('Weyes Blood')
+          expect(page).to have_content('166+')
         end
 
         expect(page).to_not have_css("#fest-06")

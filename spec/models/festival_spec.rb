@@ -14,7 +14,7 @@ describe Festival do
         expect(top_5_fests.length).to eq(5)
         expect(top_5_fests.first).to be_a(Festival)
         expect(top_5_fests.first.score).to be <= top_5_fests.second.score
-        expect(top_5_fests.first.location).to eq('Singapore, Singapore')
+        expect(top_5_fests.first.location).to eq('Barcelona, Spain')
         expect(top_5_fests.first.other_artists_count).to be > 1
       end
     end
