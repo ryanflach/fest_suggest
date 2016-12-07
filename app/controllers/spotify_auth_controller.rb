@@ -10,6 +10,6 @@ class SpotifyAuthController < ApplicationController
     "client_id=#{ENV['SPOTIFY_CLIENT']}&" \
     'response_type=code' \
     "&redirect_uri=#{ENV['SPOTIFY_REDIRECT']}&" \
-    'scope=user-top-read'
+    'scope=user-top-read playlist-modify-public'
   end
 end
