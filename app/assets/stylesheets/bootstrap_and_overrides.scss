@@ -97,3 +97,25 @@ tbody {
 .progress-bar-danger {
   background-color: black;
 }
+
+.table-playlist {
+  text-align: center;
+}
+
+.playlist {
+  border-color: #26215C;
+  border-radius: 8px;
+  background-color: inherit;
+}
+
+.playlist:hover {
+  border-color: white;
+  background-color: #26215C;
+  color: white;
+}
+
+.playlist:active {
+  border-color: #26215C;
+  background-color: inherit;
+  color: inherit;
+}

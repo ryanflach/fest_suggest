@@ -140,6 +140,7 @@ function createFestHTML(fest, index){
     + "<td class='table-artists'>" + preRenderFestArtists(fest.top_artists) + "</td>"
     + "<td class='table-artists'>" + preRenderFestArtists(fest.rec_artists) + "</td>"
     + "<td class='table-other-artists'><a href='" + fest.url + "' title='View all artists for this festival on Songkick' target='_blank'>" + fest.other_artists_count + "+</a></td>"
+    + "<td class='table-playlist'><button class='playlist'>Follow</button></td>"
     + "</tr>"
   )
 }
@@ -155,6 +156,14 @@ function renderFestivals(festivalsData){
   loadingStatusCleanup();
   $('#top-festivals').show();
   $('#songkick').fadeIn('fast');
+  followButtons();
+}
+
+function followButtons() {
+  $('.playlist').on('click', function(e){
+    e.preventDefault();
+    var fest = $(e.target).closest('tr').find('.table-fest-link').text()
+  });
 }
 
 function loadingStatusCleanup(){
