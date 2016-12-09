@@ -60,8 +60,9 @@ class Spotify::Service < Base
 
     request_pool.run
 
-    requests.map do |request|
-      parse(request.response.body)[:tracks].first[:uri]
+    requests.reduce([]) do |uris, request|
+      parsed = parse(request.response.body)[:tracks]
+      parsed.empty? ? uris : uris << parsed.first[:uri]
     end
   end
 
