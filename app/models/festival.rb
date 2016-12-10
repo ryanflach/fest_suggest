@@ -1,13 +1,15 @@
 class Festival
   attr_reader :score,
               :top_artists,
-              :rec_artists
+              :rec_artists,
+              :playlist
 
-  def initialize(params, score=nil, top_artists=nil, rec_artists=nil)
+  def initialize(params, data=nil)
     @festival = params
-    @score = score
-    @top_artists = top_artists
-    @rec_artists = rec_artists
+    @score = data[:score]
+    @top_artists = data[:top_artists]
+    @rec_artists = data[:rec_artists]
+    @playlist = data[:playlist]
   end
 
   def self.top_festivals(all_artists)
@@ -16,9 +18,12 @@ class Festival
     festivals.map do |festival|
       Festival.new(
         festival,
-        festival[:score],
-        festival[:top_artists],
-        festival[:rec_artists]
+        {
+          score: festival[:score],
+          top_artists: festival[:top_artists],
+          rec_artists: festival[:rec_artists],
+          playlist: Playlist.find_or_create(festival)
+        }
       )
     end
   end

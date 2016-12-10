@@ -8,6 +8,10 @@ describe Festival do
     it "returns the top 5 fests based on top and recommended artists" do
       VCR.use_cassette('festival_top_5_all') do
         user = create(:user)
+        playlist = Playlist.create!(
+          name: 'Primavera Sound Festival 2017',
+          spotify_id: 'test'
+        )
         all_artists = Artist.all(user, 'long_term')
         top_5_fests = Festival.top_festivals(all_artists)
 
@@ -16,6 +20,8 @@ describe Festival do
         expect(top_5_fests.first.score).to be <= top_5_fests.second.score
         expect(top_5_fests.first.location).to eq('Barcelona, Spain')
         expect(top_5_fests.first.other_artists_count).to be > 1
+        expect(top_5_fests.first.playlist).to be_a(Playlist)
+        expect(top_5_fests.first.playlist.spotify_id).to eq('test')
       end
     end
   end
