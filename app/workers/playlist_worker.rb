@@ -1,5 +1,6 @@
 class PlaylistWorker
   include Sidekiq::Worker
+  sidekiq_options concurrency: 1
 
   def perform(playlist_id, artist_names)
     service = Spotify::Service.new(User.site_admin.access_token)
@@ -19,6 +20,6 @@ class PlaylistWorker
     end
 
     service.add_tracks_to_playlist(playlist_id, top_tracks)
-    puts "Added tracks to playlist #{playlist_id}"
+    puts "Added #{top_tracks.length} tracks to playlist #{playlist_id}."
   end
 end

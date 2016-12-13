@@ -7,11 +7,7 @@ class PlaylistEngine
     @all_artists = artist_names(festival_data)
     @service = Spotify::Service.new(User.site_admin.access_token)
     @id = create_playlist(festival_data[:displayName])
-
-    # Need to revisit this - ideally the job will only execute once
-    # others are finished, currently playlists generate in isolation but
-    # not when processed multiple at a time.
-    PlaylistWorker.perform_in(rand(60).seconds, id, all_artists)
+    PlaylistWorker.perform_async(id, all_artists)
   end
 
   private
