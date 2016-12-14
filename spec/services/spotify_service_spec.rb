@@ -141,4 +141,63 @@ RSpec.describe 'Spotify service' do
       end
     end
   end
+
+  context '#user_following_playlist?' do
+    it 'returns a boolean value for if a user follows a playlist' do
+      VCR.use_cassette('spotify_service_user_following_playlist') do
+        service = Spotify::Service.new(ENV['FS_ACCESS_TOKEN'])
+        playlist_id = service.create_playlist('test2')
+        result = service.user_following_playlist?(
+          ENV['SPOTIFY_USERNAME'], playlist_id
+        )
+
+        expect(result).to eq(false)
+      end
+    end
+  end
+
+  context '#follow_playlist' do
+    it "adds a playlist to the user's public playlists" do
+      VCR.use_cassette('spotify_service_follow_playlist') do
+        playlist_id = Spotify::Service.new(ENV['FS_ACCESS_TOKEN'])
+                                      .create_playlist('test follow')
+        service = Spotify::Service.new(ENV['ACCESS_TOKEN'])
+        following_before = service.user_following_playlist?(
+          ENV['SPOTIFY_USERNAME'], playlist_id
+        )
+
+        expect(following_before).to eq(false)
+
+        service.follow_playlist(playlist_id)
+        following_after = service.user_following_playlist?(
+          ENV['SPOTIFY_USERNAME'], playlist_id
+        )
+
+        expect(following_after).to eq(true)
+      end
+    end
+  end
+
+  context '#unfollow_playlist' do
+    it "removes a followed playlist from the user's public playlists" do
+      VCR.use_cassette('spotify_service_unfollow_playlist') do
+        playlist_id = Spotify::Service.new(ENV['FS_ACCESS_TOKEN'])
+                                      .create_playlist('test unfollow')
+        service = Spotify::Service.new(ENV['ACCESS_TOKEN'])
+        service.follow_playlist(playlist_id)
+        following_before = service.user_following_playlist?(
+          ENV['SPOTIFY_USERNAME'], playlist_id
+        )
+
+        expect(following_before).to eq(true)
+
+        service.unfollow_playlist(playlist_id)
+        following_after = service.user_following_playlist?(
+          ENV['SPOTIFY_USERNAME'], playlist_id
+        )
+
+        expect(following_after).to eq(false)
+      end
+    end
+  end
 end

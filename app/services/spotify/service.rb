@@ -103,6 +103,39 @@ class Spotify::Service < Base
     end
   end
 
+  def user_following_playlist?(user_id, playlist_id)
+    request = Typhoeus::Request.new(
+      "#{base_url}/v1/users/#{ENV['FS_ADMIN_NAME']}/playlists/" \
+      "#{playlist_id}/followers/contains",
+      headers: headers,
+      params: { ids: user_id }
+    ).run
+
+    parse(request.response_body).first
+  end
+
+  def follow_playlist(playlist_id)
+    request = Typhoeus::Request.new(
+      "#{base_url}/v1/users/#{ENV['FS_ADMIN_NAME']}/playlists/" \
+      "#{playlist_id}/followers",
+      method: :put,
+      headers: {
+        'Authorization': headers[:Authorization],
+        'Content-Type': 'application/json'
+      },
+      body: { public: true }.to_json
+    ).run
+  end
+
+  def unfollow_playlist(playlist_id)
+    request = Typhoeus::Request.new(
+      "#{base_url}/v1/users/#{ENV['FS_ADMIN_NAME']}/playlists/" \
+      "#{playlist_id}/followers",
+      method: :delete,
+      headers: headers
+    ).run
+  end
+
   private
 
   attr_reader :base_url,
