@@ -4,7 +4,7 @@ class Festival
               :rec_artists,
               :festival
 
-  def initialize(params, data=nil)
+  def initialize(params, data={})
     @festival = params
     @score = data[:score]
     @top_artists = data[:top_artists]
