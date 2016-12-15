@@ -2,7 +2,7 @@ require 'rails_helper'
 include SpotifyHelper
 
 RSpec.describe 'User views their top festivals' do
-  before(:all) { refresh_access_token if token_expired? }
+  before(:all) { refresh_access_tokens if token_expired? }
 
   context 'logged-in user for all time top artists' do
     scenario 'they visit the root path', js: true do
