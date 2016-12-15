@@ -119,3 +119,9 @@ tbody {
   background-color: inherit;
   color: inherit;
 }
+
+.playlist:disabled {
+  border-color: gray;
+  color: gray;
+  background-color: lightgray;
+}
