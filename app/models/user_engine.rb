@@ -15,7 +15,7 @@ class UserEngine
               :user
 
   def token_expired?
-    user.token_expiry < Time.now
+    user.token_expiry < Time.now - 11.minutes
   end
 
   def get_new_tokens
