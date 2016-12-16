@@ -18,11 +18,9 @@ class Festival
       Rails.cache.fetch(festival[:displayName], expires_in: 1.hour) do
         Festival.new(
           festival,
-          {
-            score: festival[:score],
-            top_artists: festival[:top_artists],
-            rec_artists: festival[:rec_artists]
-          }
+          score: festival[:score],
+          top_artists: festival[:top_artists],
+          rec_artists: festival[:rec_artists]
         )
       end
     end

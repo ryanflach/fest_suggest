@@ -102,7 +102,7 @@ RSpec.describe 'Spotify service' do
   context '#each_artists_top_track' do
     it 'returns an array of one Spotify track URI for each ID' do
       VCR.use_cassette('spotify_service_each_artists_top_track') do
-        ids = ['4MXUO7sVCaFgFjoTI5ox5c', '6CwDvApcRshxhEVMP30Sq7']
+        ids = %w(4MXUO7sVCaFgFjoTI5ox5c 6CwDvApcRshxhEVMP30Sq7)
         uris = Spotify::Service.new(ENV['ACCESS_TOKEN'])
                                .each_artists_top_track(ids)
 
@@ -118,10 +118,7 @@ RSpec.describe 'Spotify service' do
       VCR.use_cassette('spotify_service_add_tracks_to_playlist') do
         service = Spotify::Service.new(ENV['FS_ACCESS_TOKEN'])
         playlist_id = service.create_playlist('test')
-        artist_ids = [
-          '4MXUO7sVCaFgFjoTI5ox5c',
-          '6CwDvApcRshxhEVMP30Sq7'
-        ]
+        artist_ids = %w(4MXUO7sVCaFgFjoTI5ox5c 6CwDvApcRshxhEVMP30Sq7)
         track_uris = service.each_artists_top_track(artist_ids)
         response =
           service.add_tracks_to_playlist(playlist_id, track_uris)

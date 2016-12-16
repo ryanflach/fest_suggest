@@ -8,7 +8,7 @@ class Playlist < ApplicationRecord
     end
   end
 
-  def is_followed?(user)
+  def followed?(user)
     Spotify::Service.new(user.access_token)
                     .user_following_playlist?(
                       user.username,

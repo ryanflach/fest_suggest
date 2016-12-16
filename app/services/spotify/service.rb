@@ -86,7 +86,7 @@ class Spotify::Service < Base
         "#{base_url}/v1/search?type=artist",
         headers: headers,
         params: {
-          q: name.gsub(' ', '+'),
+          q: name.tr(' ', '+'),
           type: 'artist',
           limit: 1
         }
@@ -115,7 +115,7 @@ class Spotify::Service < Base
   end
 
   def follow_playlist(playlist_id)
-    request = Typhoeus::Request.new(
+    Typhoeus::Request.new(
       "#{base_url}/v1/users/#{ENV['FS_ADMIN_NAME']}/playlists/" \
       "#{playlist_id}/followers",
       method: :put,
@@ -128,7 +128,7 @@ class Spotify::Service < Base
   end
 
   def unfollow_playlist(playlist_id)
-    request = Typhoeus::Request.new(
+    Typhoeus::Request.new(
       "#{base_url}/v1/users/#{ENV['FS_ADMIN_NAME']}/playlists/" \
       "#{playlist_id}/followers",
       method: :delete,

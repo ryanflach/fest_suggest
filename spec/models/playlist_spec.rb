@@ -12,14 +12,14 @@ RSpec.describe Playlist, type: :model do
 
     expect(Playlist.count).to eq(1)
     expect(Playlist.find_or_create(
-      Festival.new({ displayName: 'test' })
+      Festival.new(displayName: 'test' )
     )).to eq(list)
 
     allow_any_instance_of(PlaylistEngine)
       .to receive(:create_playlist)
       .and_return('1')
     other = Playlist.find_or_create(
-      Festival.new({ displayName: 'none', performance: [] })
+      Festival.new(displayName: 'none', performance: [])
     )
 
     expect(Playlist.count).to eq(2)
