@@ -5,7 +5,7 @@ RSpec.describe 'User views their top festivals' do
   before(:all) { refresh_access_tokens if token_expired? }
 
   context 'logged-in user for all time top artists' do
-    scenario 'they visit the root path', js: true do
+    scenario 'they view fests, follow/unfollow a playlist', js: true do
       VCR.use_cassette('festival_top_5_all') do
         user = create(:user)
 
@@ -17,7 +17,7 @@ RSpec.describe 'User views their top festivals' do
         click_on 'Top 5 Fests by All Time Top Artists'
 
         # Wait for requests
-        sleep(8)
+        sleep(25)
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -27,6 +27,7 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Top Artists')
           expect(page).to have_content('Recommended Artists')
           expect(page).to have_content('Other Artists')
+          expect(page).to have_content('Spotify Playlist')
         end
 
         within("#fest-01") do
@@ -35,8 +36,19 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Local Natives')
           expect(page).to have_content('Tycho')
           expect(page).to have_content('Bon Iver')
-          expect(page).to have_content('Angel Olsen')
-          expect(page).to have_content('169+')
+          expect(page).to have_content('Kevin Morby')
+          expect(page).to have_content('167+')
+          expect(page).to have_button('Follow')
+
+          click_on 'Follow'
+
+          expect(page).to have_button('Unfollow')
+          expect(page).to_not have_button('Follow')
+
+          click_on 'Unfollow'
+
+          expect(page).to have_button('Follow')
+          expect(page).to_not have_button('Unfollow')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -45,7 +57,7 @@ RSpec.describe 'User views their top festivals' do
   end
 
   context 'logged-in user for 6 month top artists' do
-    scenario 'they visit the root path', js: true do
+    scenario 'they view fests, follow/unfollow playlist', js: true do
       VCR.use_cassette('festival_top_5_6_months') do
         user = create(:user)
 
@@ -57,7 +69,7 @@ RSpec.describe 'User views their top festivals' do
         click_on "Top 5 Fests by Last 6 Month's Top Artists"
 
         # Wait for requests
-        sleep(8)
+        sleep(25)
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -66,6 +78,7 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Top Artists')
           expect(page).to have_content('Recommended Artists')
           expect(page).to have_content('Other Artists')
+          expect(page).to have_content('Spotify Playlist')
         end
 
         within("#fest-01") do
@@ -75,10 +88,20 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Bon Iver')
           expect(page).to have_content('Tycho')
           expect(page).to have_content('Frank Ocean')
-          expect(page).to have_content('Mitski')
           expect(page).to have_content('Kevin Morby')
           expect(page).to have_content('Angel Olsen')
-          expect(page).to have_content('166+')
+          expect(page).to have_content('168+')
+          expect(page).to have_button('Follow')
+
+          click_on 'Follow'
+
+          expect(page).to have_button('Unfollow')
+          expect(page).to_not have_button('Follow')
+
+          click_on 'Unfollow'
+
+          expect(page).to have_button('Follow')
+          expect(page).to_not have_button('Unfollow')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -99,7 +122,7 @@ RSpec.describe 'User views their top festivals' do
         click_on "Top 5 Fests by Last 4 Week's Top Artists"
 
         # Wait for requests
-        sleep(8)
+        sleep(25)
 
         within('table thead') do
           expect(page).to have_content('Rank')
@@ -108,19 +131,28 @@ RSpec.describe 'User views their top festivals' do
           expect(page).to have_content('Top Artists')
           expect(page).to have_content('Recommended Artists')
           expect(page).to have_content('Other Artists')
+          expect(page).to have_content('Spotify Playlist')
         end
 
         within("#fest-01") do
           expect(page)
             .to have_link('Primavera Sound Festival 2017')
           expect(page).to have_content('Bon Iver')
-          expect(page).to have_content('BadBadNotGood')
-          expect(page).to have_content('Run The Jewels')
-          expect(page).to have_content('Mitski')
           expect(page).to have_content('Local Natives')
+          expect(page).to have_content('Tycho')
           expect(page).to have_content('Angel Olsen')
-          expect(page).to have_content('Weyes Blood')
-          expect(page).to have_content('166+')
+          expect(page).to have_content('168+')
+          expect(page).to have_button('Follow')
+
+          click_on 'Follow'
+
+          expect(page).to have_button('Unfollow')
+          expect(page).to_not have_button('Follow')
+
+          click_on 'Unfollow'
+
+          expect(page).to have_button('Follow')
+          expect(page).to_not have_button('Unfollow')
         end
 
         expect(page).to_not have_css("#fest-06")
@@ -128,7 +160,7 @@ RSpec.describe 'User views their top festivals' do
     end
   end
 
-  context 'logged-in user no top artists with festivals' do
+  context 'logged-in user no festivals' do
     scenario 'they visit the root path', js: true do
       VCR.use_cassette('festival_top_5_none') do
         user = create(:user)
