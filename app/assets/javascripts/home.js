@@ -76,7 +76,7 @@ function fourWeekArtistsButton(){
     event.preventDefault();
     $('#top-artists-header').hide().html('Top Spotify Artists - Last 4 Weeks').fadeIn('slow');
     fetchArtists('short_term');
-  })
+  });
 }
 
 function sixMonthArtistsButton(){
@@ -118,9 +118,9 @@ function collectArtists(artistsData){
 
 function createArtistHTML(artist){
   return $(
-    "<div class='col-md-3 artist text-center'>"
-    + artist.name
-    + "</div>"
+    "<div class='col-md-3 artist text-center'>" +
+    artist.name +
+    "</div>"
   );
 }
 
@@ -130,24 +130,44 @@ function renderArtists(artistsData){
 
 function createFestHTML(fest, index){
   return(
-    "<tr id='fest-"
-    + index + 1
-    + "'>"
-    + "<td class='table-body-default'>" + (index + 1) + "</td>"
-    + "<td class='table-fest-link'><a href='" + fest.url + "' title='View this festival on Songkick' target='_blank'>" + fest.name + "</a></td>"
-    + "<td class='table-fest-location'>" + fest.location + "</td>"
-    + "<td class= 'table-fest-dates'>" + fest.start_date + " - " + fest.end_date + "</td>"
-    + "<td class='table-artists'>" + preRenderFestArtists(fest.top_artists) + "</td>"
-    + "<td class='table-artists'>" + preRenderFestArtists(fest.rec_artists) + "</td>"
-    + "<td class='table-other-artists'><a href='" + fest.url + "' title='View all artists for this festival on Songkick' target='_blank'>" + fest.other_artists_count + "+</a></td>"
-    + "</tr>"
-  )
+    "<tr id='fest-0" +
+    (index + 1) +
+    "'>" +
+    "<td class='table-body-default'>" + (index + 1) + "</td>" +
+    "<td class='table-fest-link'><a href='" + fest.url + "' title='View this festival on Songkick' target='_blank'>" + fest.name + "</a></td>" +
+    "<td class='table-fest-location'>" + fest.location + "</td>" +
+    "<td class= 'table-fest-dates'>" + fest.start_date + " - " + fest.end_date + "</td>" +
+    "<td class='table-artists'>" + preRenderFestArtists(fest.top_artists) + "</td>" +
+    "<td class='table-artists'>" + preRenderFestArtists(fest.rec_artists) + "</td>" +
+    "<td class='table-other-artists'><a href='" + fest.url + "' title='View all artists for this festival on Songkick' target='_blank'>" + fest.other_artists_count + "+</a></td>" +
+    "<td class='table-playlist'><button class='playlist' disabled='true'>Loading...</button></td>" +
+    "</tr>"
+  );
+}
+
+function setButtonText(fests) {
+  $('.playlist').each(function(_index, button){
+    var $button = $(button);
+    var fest = $button.closest('tr').find('.table-fest-link').text();
+    $.ajax({
+      url: '/playlists/' + fest
+    })
+    .then(setFollowText.bind(this, $button))
+    .fail(handleError);
+  });
+}
+
+function setFollowText(button, response) {
+  var text = response.playlist.followed ? 'Unfollow' : 'Follow';
+  button.text(text);
+  button.attr('class', 'playlist ' + text.toLowerCase());
+  button.prop('disabled', false);
 }
 
 function preRenderFestArtists(artists) {
   return artists.map(function(artist) {
-    return artist.name + "<br>"
-  }).join('')
+    return artist.name + "<br>";
+  }).join('');
 }
 
 function renderFestivals(festivalsData){
@@ -155,6 +175,32 @@ function renderFestivals(festivalsData){
   loadingStatusCleanup();
   $('#top-festivals').show();
   $('#songkick').fadeIn('fast');
+  setButtonText(festivalsData);
+  followButtons();
+}
+
+function followButtons() {
+  $('.playlist').on('click', function(e){
+    e.preventDefault();
+    var $button = $(e.target);
+    var fest = $button.closest('tr').find('.table-fest-link').text();
+    $button.prop('disabled', true);
+    $.ajax({
+      type: 'PUT',
+      url: '/playlists/' + fest,
+      data: { playlist: { text: $button.text() } }
+    })
+    .then(updateButton.bind(this, $button))
+    .fail(handleError);
+  });
+}
+
+function updateButton(button, _response) {
+  var existingText = button.text();
+  var newText = existingText === 'Follow' ? 'Unfollow' : 'Follow';
+  button.text(newText);
+  button.attr('class', 'playlist ' + newText.toLowerCase());
+  button.prop('disabled', false);
 }
 
 function loadingStatusCleanup(){

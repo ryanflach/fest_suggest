@@ -2,7 +2,7 @@ require 'rails_helper'
 include SpotifyHelper
 
 RSpec.describe FestivalsController, type: :request do
-  before(:all) { refresh_access_token if token_expired? }
+  before(:all) { refresh_access_tokens if token_expired? }
 
   it 'returns festivals for long_term range' do
     VCR.use_cassette('festival_controller_long_term') do

@@ -8,13 +8,12 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  def refresh_expired_token
-    if current_user && current_user.token_expiry < Time.now
-      tokens = Spotify::AuthService.new
-                                   .refresh_user_tokens(
-                                     current_user.refresh_token
-                                   )
-      current_user.update(tokens)
-    end
+  def site_admin
+    @site_admin ||= User.site_admin
+  end
+
+  def refresh_expired_tokens
+    UserEngine.update_user(current_user)
+    UserEngine.update_user(site_admin)
   end
 end

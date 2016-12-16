@@ -2,7 +2,7 @@ require 'rails_helper'
 include SpotifyHelper
 
 describe Artist do
-  before(:all) { refresh_access_token if token_expired? }
+  before(:all) { refresh_access_tokens if token_expired? }
 
   it "gets a user's top artists with complete profiles" do
     VCR.use_cassette('artist_top_artists_complete') do

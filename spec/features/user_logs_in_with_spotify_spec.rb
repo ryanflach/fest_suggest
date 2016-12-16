@@ -42,14 +42,14 @@ RSpec.feature 'User logs in with Spotify' do
         .to receive(:request_user_data)
         .and_return(parsed_user_data)
 
-      expect(User.count).to eq(0)
+      expect(User.count).to eq(1)
 
       visit '/'
       click_on 'Login with Spotify'
 
-      user = User.first
+      user = User.last
 
-      expect(User.count).to eq(1)
+      expect(User.count).to eq(2)
       expect(user.username).to eq('test')
       expect(user.access_token).to eq('sample_token')
       expect(user.refresh_token).to eq('sample_refresh_token')
@@ -104,17 +104,17 @@ RSpec.feature 'User logs in with Spotify' do
         .to receive(:request_user_data)
         .and_return(parsed_user_data)
 
-      expect(User.count).to eq(1)
-      expect(User.first.username).to eq('test')
-      expect(User.first.access_token).to eq('1234')
-      expect(User.first.refresh_token).to eq('5678')
+      expect(User.count).to eq(2)
+      expect(User.last.username).to eq('test')
+      expect(User.last.access_token).to eq('1234')
+      expect(User.last.refresh_token).to eq('5678')
 
       visit '/'
       click_on 'Login with Spotify'
 
-      user = User.first
+      user = User.last
 
-      expect(User.count).to eq(1)
+      expect(User.count).to eq(2)
       expect(current_path).to eq(root_path)
       expect(user.username).to eq('test')
       expect(user.access_token).to eq('sample_token')

@@ -17,4 +17,12 @@ class User < ApplicationRecord
     end
     user
   end
+
+  def self.site_admin
+    find_or_create_by(username: ENV['FS_ADMIN_NAME']) do |user|
+      user.access_token  = ENV['FS_ACCESS_TOKEN']
+      user.refresh_token = ENV['FS_REFRESH_TOKEN']
+      user.token_expiry  = Time.now - 3700
+    end
+  end
 end

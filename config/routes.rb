@@ -9,4 +9,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy', as: :logout
   resources :festivals, only: [:index], defaults: { format: 'json' }
   resources :artists, only: [:index], defaults: { format: 'json' }
+  resources :playlists,
+    only: [:show, :update],
+    param: :name,
+    defaults: { format: 'json' }
 end

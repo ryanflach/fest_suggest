@@ -32,7 +32,7 @@ gem 'faraday'
 gem 'twitter-bootstrap-rails'
 gem 'redis'
 gem 'redis-rails'
-# gem 'sidekiq'
+gem 'sidekiq'
 gem 'typhoeus'
 
 group :development, :test do
