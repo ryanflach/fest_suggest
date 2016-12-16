@@ -130,8 +130,8 @@ function renderArtists(artistsData){
 
 function createFestHTML(fest, index){
   return(
-    "<tr id='fest-" +
-    index + 1 +
+    "<tr id='fest-0" +
+    (index + 1) +
     "'>" +
     "<td class='table-body-default'>" + (index + 1) + "</td>" +
     "<td class='table-fest-link'><a href='" + fest.url + "' title='View this festival on Songkick' target='_blank'>" + fest.name + "</a></td>" +
