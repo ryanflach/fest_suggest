@@ -30,8 +30,7 @@ class Spotify::Service < Base
   end
 
   def get_username
-    data = request_user_data
-    data[:display_name].nil? ? data[:id] : data[:display_name]
+    request_user_data[:id]
   end
 
   def create_playlist(name)
