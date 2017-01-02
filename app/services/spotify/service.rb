@@ -60,7 +60,7 @@ class Spotify::Service < Base
     request_pool.run
 
     requests.reduce(Hash.new([])) do |uris, request|
-      return rate_limit(request) if request.response.code == 429
+      return rate_limit(request.response) if limited?(request.response)
       parsed = parse(request.response.body)[:tracks]
       uris[:all] += [parsed.first[:uri]] unless parsed.empty?
       uris
@@ -78,7 +78,8 @@ class Spotify::Service < Base
       },
       body: { uris: tracks }.to_json
     ).run
-    parse(request.response_body)
+    return rate_limit(request) if limited?(request)
+    parse(request.body)
   end
 
   def all_artist_ids(artist_names)
@@ -99,7 +100,7 @@ class Spotify::Service < Base
     request_pool.run
 
     requests.reduce(Hash.new([])) do |ids, request|
-      return rate_limit(request) if request.response.code == 429
+      return rate_limit(request.response) if limited?(request.response)
       parsed = parse(request.response.body)[:artists][:items]
       ids[:all] += [parsed.first[:id]] unless parsed.empty?
       ids
@@ -153,9 +154,13 @@ class Spotify::Service < Base
     parse(request.response_body)
   end
 
-  def rate_limit(request)
-    limit = request.response.headers['Retry-After']
+  def rate_limit(response)
+    limit = response.headers['Retry-After']
     puts "Rate limited by Spotify for #{limit} seconds"
     { limit: limit.to_f }
+  end
+
+  def limited?(response)
+    response.code == 429
   end
 end

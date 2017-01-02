@@ -32,8 +32,13 @@ class PlaylistEngine
 
   def self.add_tracks(service, id, tracks)
     puts "Adding track(s): #{tracks} to playlist #{id}..."
-    service.add_tracks_to_playlist(id, tracks)
-    puts "Added #{tracks.length} track(s) to playlist #{id}."
+    response = service.add_tracks_to_playlist(id, tracks)
+    if response[:limit]
+      handle_rate_limiting(response)
+      add_tracks(service, id, tracks)
+    else
+      puts "Added #{tracks.length} track(s) to playlist #{id}."
+    end
   end
 
   private
