@@ -1,7 +1,7 @@
 class PlaylistEngine
   attr_reader :id
 
-  RATE_LIMIT_BUFFER = 0.75
+  RATE_LIMIT_BUFFER = 1.0
 
   def initialize(festival)
     @all_artists = artist_names(festival.festival)
@@ -31,6 +31,7 @@ class PlaylistEngine
   end
 
   def self.add_tracks(service, id, tracks)
+    puts "Adding track(s): #{tracks} to playlist #{id}..."
     service.add_tracks_to_playlist(id, tracks)
     puts "Added #{tracks.length} track(s) to playlist #{id}."
   end
