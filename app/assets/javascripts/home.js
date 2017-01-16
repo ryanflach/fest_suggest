@@ -6,7 +6,6 @@ $(document).ready(function(){
   sixMonthFestButton();
   fourWeekFestButton();
   hideInitialElements();
-  $('#all-time-button').click();
   $('#all-time-fest-button').click();
 });
 
@@ -47,6 +46,7 @@ function finalCountdown(){
 function allTimeFestButton(){
   $('#all-time-fest-button').on('click', function(event){
     event.preventDefault();
+    $('#all-time-button').click();
     $('#top-fests-header').hide().html('Top 5 Upcoming Festivals - All Time Top Artists').fadeIn('slow');
     loadingBar();
     fetchFestivals('long_term');
@@ -56,6 +56,7 @@ function allTimeFestButton(){
 function sixMonthFestButton(){
   $('#6-mo-fest-button').on('click', function(event){
     event.preventDefault();
+    $('#6-mo-button').click();
     $('#top-fests-header').hide().html('Top 5 Upcoming Festivals - 6 Month Top Artists').fadeIn('slow');
     loadingBar();
     fetchFestivals('medium_term');
@@ -65,6 +66,7 @@ function sixMonthFestButton(){
 function fourWeekFestButton(){
   $('#4-week-fest-button').on('click', function(event){
     event.preventDefault();
+    $('#4-week-button').click();
     $('#top-fests-header').hide().html('Top 5 Upcoming Festivals - 4 Week Top Artists').fadeIn('slow');
     loadingBar();
     fetchFestivals('short_term');
