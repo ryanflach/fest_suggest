@@ -17,7 +17,14 @@
     <div class="container">
       <center>
         <h1><%= link_to "FestSuggest", root_path, class: 'fest-suggest' %></h1>
-        <% if current_user %>
+        <% songkick_key_disabled = true %>
+        <% if songkick_key_disabled %>
+          <div class="alert alert-warning text-center spotify-login" role="alert">
+            <h4 class="alert-heading">🚧 Under Construction 🚧</h4>
+            Unfortunately, my Songkick API key has been disabled. </br>
+            Site will remain down until I'm able to resolve with their support team.
+          </div>
+        <% elsif current_user %>
           <%= link_to "X", logout_path, method: :delete, class: 'logout' %>
         <% else %>
           <%= link_to (image_tag 'spotify_login.svg', class: 'spotify-login', alt: 'Login with Spotify'), spotify_login_path %>
