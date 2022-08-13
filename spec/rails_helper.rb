@@ -18,8 +18,15 @@ end
 VCR.configure do |config|
   config.cassette_library_dir = "spec/vcr_cassettes"
   config.hook_into :webmock
-  config.allow_http_connections_when_no_cassette = true
   config.ignore_localhost = true
+  %w[
+    SONGKICK_KEY
+    SPOTIFY_CLIENT
+    SPOTIFY_SECRET
+    SPOTIFY_REDIRECT
+  ].each do |key|
+    config.filter_sensitive_data("<#{key}>") { ENV[key] }
+  end
 end
 # Add additional requires below this line. Rails is not loaded until this point!
 

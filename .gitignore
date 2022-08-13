@@ -22,8 +22,5 @@
 # Ignore SimpleCov files
 coverage
 
-# Ignore vcr cassettes
-/spec/vcr_cassettes
-
 # Ignore redis dump
 dump.rdb
