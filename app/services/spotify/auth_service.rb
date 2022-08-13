@@ -52,7 +52,7 @@ module Spotify
       refresh_token = tokens[:refresh_token]
       hash = {
         access_token:  tokens[:access_token],
-        token_expiry:  Time.now + tokens[:expires_in]
+        token_expiry:  Time.now + tokens.fetch(:expires_in, 0)
       }
       hash[:refresh_token] = refresh_token if refresh_token
       hash
