@@ -1,8 +1,6 @@
 # FestSuggest
 [![Code Climate](https://codeclimate.com/github/ryanflach/fest_suggest/badges/gpa.svg)](https://codeclimate.com/github/ryanflach/fest_suggest)
 
-**Live Site: http://www.festsuggest.com**
-
 ## About
 A website for [Spotify](www.spotify.com) users to find upcoming music festivals based on their listening habits. Technologies used include Rails, JavaScript, jQuery, Redis, and Sidekiq.
 
